@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MobileSklad</string>
+    <string name="main_radioButton_online">онлайн</string>
+    <string name="main_radioButton_offline">оффлайн</string>
+    <string name="main_radioButton_offline_online">оффлайн + онлайн</string>
+    <string name="action_sign_in">старт</string>
+    <string name="prompt_email">e-mail</string>
+    <string name="prompt_password">пароль</string>
+    <string name="activity_main_switch_autologin">автоматическая регистрация</string>
+    <string name="action_settings">настройки</string>
+    <string name="activity_main_switch_autologin_hint">автоматическая регистрация</string>
+    <string name="action_scan">сканировать</string>
+    <string name="action_search">поиск</string>
+</resources>
