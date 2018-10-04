@@ -12,4 +12,16 @@
     <string name="activity_main_switch_autologin_hint">автоматическая регистрация</string>
     <string name="action_scan">сканировать</string>
     <string name="action_search">поиск</string>
+    <string name="activity_scan_desc">сканировать ШК</string>
+    <string name="activity_settings_desc">настройки видимости</string>
+    <string name="activity_login_desc">авторизация</string>
+    <string name="container">контейнер</string>
+    <string name="scan_not_found">Не найден ШК</string>
+    <string name="scan_exit_">Для выхода нажмите \'Назад\' еще раз</string>
+    <string name="dummy_content">магистральные\n маршруты</string>
+    <string name="title_activity_splash">магистральные маршруты</string>
+    <string name="scan_exit_message">Для выхода из приложения нажмите кнопку \"Назад\" еще раз.</string>
+    <string name="barcode">ШК</string>
+    <string name="enable_counter">использовать счетчик при просмотре информации о контейнере</string>
+    <string name="setting_timeout">таймаут</string>
 </resources>

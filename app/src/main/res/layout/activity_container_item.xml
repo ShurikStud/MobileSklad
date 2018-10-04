@@ -2,14 +2,16 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_container_row"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/activity_container_item_text_value"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="value"
-        android:textSize="@dimen/text_size"
+        style="@style/TextStyleContainerValue"
         app:layout_constraintBottom_toTopOf="@id/activity_container_item_text_name"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,10 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/activity_container_item_text_name"
-        android:textSize="@dimen/text_size_hint"
+        android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_container_item_text_value"
         android:hint="name"
+        style="@style/TextStyleContainerDescr"
         />
 
 </android.support.constraint.ConstraintLayout>

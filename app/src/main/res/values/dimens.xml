@@ -14,5 +14,6 @@
     <dimen name="colorSeparator">0x64089E</dimen>
     <dimen name="colorSettingVisible">0x82E4F3</dimen>
     <dimen name="colorSettingInvisible">0xF4D179</dimen>
+    <dimen name="padding_button">8dp</dimen>
 
 </resources>

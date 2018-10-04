@@ -11,4 +11,15 @@
     <string name="action_settings">settings</string>
     <string name="action_scan">scan</string>
     <string name="action_search">search</string>
+    <string name="activity_scan_desc">scan barcode</string>
+    <string name="activity_settings_desc">visibility settings</string>
+    <string name="activity_login_desc">authorization</string>
+    <string name="container">container</string>
+    <string name="scan_not_found">Result Not Found</string>
+    <string name="scan_exit_message">To exit, press \'back\' again</string>
+    <string name="title_activity_splash">trunk routes</string>
+    <string name="dummy_content">trunk\n routes</string>
+    <string name="barcode">barcode</string>
+    <string name="enable_counter">enable counter</string>
+    <string name="setting_timeout">timeout</string>
 </resources>

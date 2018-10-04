@@ -1,16 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContainerActivity">
+    android:layout_gravity="center"
+    android:background="@color/colorBackgroundSeparatorCenter"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_container_view">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_container_listView"
+        app:layout_constraintVertical_weight="1"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/activity_container_textview_container_descr"
+            style="@style/TextStyleContainerDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/barcode"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_container_textview_counter"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_container_textview_counter" />
+
+        <TextView
+            android:id="@+id/activity_container_textview_container_value"
+            style="@style/TextStyleContainerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/container"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_container_textview_counter"
+            app:layout_constraintEnd_toStartOf="@+id/activity_container_textview_counter"
+            app:layout_constraintHorizontal_weight="4"
+            app:layout_constraintLeft_toRightOf="@id/container_header_textview_container_descr"
+            app:layout_constraintRight_toLeftOf="@id/container_header_textview_counter"
+            app:layout_constraintStart_toEndOf="@+id/activity_container_textview_container_descr"
+            app:layout_constraintTop_toTopOf="@+id/activity_container_textview_counter" />
+
+        <TextView
+            android:id="@+id/activity_container_textview_counter"
+            style="@style/TextStyleContainerValue"
+            android:layout_width="70sp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text=""
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="6" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/http_service_progress"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+
+        />
 
     <ListView
         android:id="@+id/activity_container_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5dp" />
 
-    </ListView>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
