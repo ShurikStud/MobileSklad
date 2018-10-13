@@ -6,24 +6,34 @@ import java.util.List;
 public final class ContainerPropertiesSettings {
     // класс настроек порядка и видимости реквизитов КОНТЕЙНЕРа (Container)
 
+    private static final int PROPERTIES_VERSION = 9;
+    int current_version;
+
     private List<Property> properties; // все возможные свойства контейнера
     private int separator; // номер в списке, меньше которго - видимые свойства, больше или равно - невидимые
     static ContainerPropertiesSettings instance;
 
 
-    private ContainerPropertiesSettings(){}
+    private ContainerPropertiesSettings(){
+
+    }
 
     static public ContainerPropertiesSettings getInstance() {
 
         if (instance == null){
             instance = new ContainerPropertiesSettings();
-
+            instance.setCurrentVersion();
         }
 
         return instance;
     }
 
     public void setProperties(ContainerPropertiesSettings input){
+
+        if (input.current_version != current_version) {
+            initDefault();
+            return;
+        }
 
         if (properties == null) {
             properties = new ArrayList<Property>();
@@ -47,25 +57,26 @@ public final class ContainerPropertiesSettings {
             properties.clear();
         }
 
-        properties.add(new Property("Driver_name", "ФИО водителя"));
-        properties.add(new Property("Vehicle_name", "№ транспортного средства"));
-        properties.add(new Property("ZayavkaTEP_highway_date", "дата Заявки ТЭП (магистральной)"));
-        properties.add(new Property("ZayavkaTEP_highway_number", "№ Заявки ТЭП (магистральной)"));
-        properties.add(new Property("ZayavkaTEP_number", "№ Заявки ТЭП"));
-        properties.add(new Property("Trip_number", "№ рейса"));
-        properties.add(new Property("Nn", "№ п/п"));
-        properties.add(new Property("SEPARATOR", "НЕ ОТОБРАЖАЮТСЯ"));
-        properties.add(new Property("Partner_address", "адрес Клиента"));
-        properties.add(new Property("Partner_name", "Клиент"));
-        properties.add(new Property("Partner_phone", "тел. Клиента"));
-        properties.add(new Property("Invoice_numbers", "№№ накладных"));
-        properties.add(new Property("Type_pack", "Тип упаковки"));
-        properties.add(new Property("Weight", "Вес, кг."));
-        properties.add(new Property("Amount_goods", "количество грузов"));
-        properties.add(new Property("Number", "№ тарного места"));
-        properties.add(new Property("Volume", "объем тарного места"));
+        properties.add(new Property("Driver_name", "ФИО водителя", null));
+        properties.add(new Property("Vehicle_name", "№ транспортного средства", null));
+        properties.add(new Property("ZayavkaTEP_highway_date", "дата Заявки ТЭП (магистральной)", null));
+        properties.add(new Property("ZayavkaTEP_highway_number", "№ Заявки ТЭП (магистральной)", null));
+        properties.add(new Property("ZayavkaTEP_number", "№ Заявки ТЭП", null));
+        properties.add(new Property("Trip_number", "№ рейса", null));
+        properties.add(new Property("Nn", "№ п/п", "/"));
+        properties.add(new Property("SEPARATOR", "НЕ ОТОБРАЖАЮТСЯ", null));
+        properties.add(new Property("Partner_address", "Адрес Клиента", null));
+        properties.add(new Property("Partner_name", "Клиент", null));
+        properties.add(new Property("Partner_phone", "тел. Клиента", null));
+        properties.add(new Property("Invoice_numbers", "№№ накладных", null));
+        properties.add(new Property("Type_pack", "Тип упаковки", null));
+        properties.add(new Property("Weight", "Вес, кг.", "/"));
+        properties.add(new Property("Amount_goods", "Количество грузов", "/"));
+        properties.add(new Property("Number", "№ тарного места", "из"));
+        properties.add(new Property("Volume", "Объем тарного места, л.", "/"));
         //separator = properties.size();
         separator = 7;
+        setCurrentVersion();
     }
 
     public List<Property> getProperties() {
@@ -78,9 +89,7 @@ public final class ContainerPropertiesSettings {
         for (int i = 0; i < separator; i++){
             visibleProperties.add(properties.get(i));
         }
-
         return visibleProperties;
-
     }
 
     public int getSeparator(){
@@ -114,10 +123,12 @@ public final class ContainerPropertiesSettings {
     public class Property{
         String name;
         String description;
+        String delimiter;
 
-        public Property(String name, String description) {
+        public Property(String name, String description, String delimiter) {
             this.name = name;
             this.description = description;
+            this.delimiter = delimiter;
         }
 
         public String getName() {
@@ -135,6 +146,17 @@ public final class ContainerPropertiesSettings {
         public void setDescription(String description) {
             this.description = description;
         }
+
+        public String getDelimiter() {
+            return delimiter;
+        }
+
+        public void setDelimiter(String delimiter) {
+            this.delimiter = delimiter;
+        }
     }
 
+    private void setCurrentVersion(){
+        current_version = PROPERTIES_VERSION;
+    }
 }

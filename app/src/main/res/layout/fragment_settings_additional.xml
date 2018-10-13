@@ -4,13 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorBackgroundLayout"
+    android:background="@color/colorBackgroundSeparatorCenter"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginVertical="5dp">
+
+        <com.omegaauto.shurik.mobilesklad.view.ProgressButton
+            android:id="@+id/fragment_settings_additional_button_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            style="@style/ButtonStyle"
+            android:text="@string/settings_reset"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_container_row"
+        android:layout_marginVertical="5dp"
+        >
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/fragment_settings_additional_switch_counter"
@@ -43,7 +64,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/shape_container_row"
+        android:layout_marginVertical="5dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -70,4 +93,11 @@
             android:paddingRight="8dp"/>
 
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/fragment_settings_additional_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        />
 </LinearLayout>

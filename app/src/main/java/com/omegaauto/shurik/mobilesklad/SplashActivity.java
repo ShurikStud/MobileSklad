@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.omegaauto.shurik.mobilesklad.container.ContainerPropertiesSettings;
+import com.omegaauto.shurik.mobilesklad.settings.ListFontSizes;
 import com.omegaauto.shurik.mobilesklad.utils.MySharedPref;
 
 /**
@@ -36,9 +37,10 @@ public class SplashActivity extends AppCompatActivity {
 
                 try {
 
-                    int logotime    = 1000;
+                    int logotime    = 8000;
 
-                    //containerPropertiesSettings.initDefault();
+                    ListFontSizes listFontSizes = ListFontSizes.getInstance();
+                    listFontSizes.init(activity.getBaseContext());
 
                     MySharedPref.loadSettings(activity.getBaseContext());
                     MySharedPref.loadMobileSkladSettings(activity.getBaseContext());
@@ -48,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                         sleep(200);
                         logotime-=200;
                     }
-                    // startActivity(new Intent(activity, MainActivity.class));
+
                     startActivity(new Intent(activity, MainActivity.class));
 
                 } catch (InterruptedException interrEx){

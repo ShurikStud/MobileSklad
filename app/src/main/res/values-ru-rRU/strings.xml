@@ -19,9 +19,10 @@
     <string name="scan_not_found">Не найден ШК</string>
     <string name="scan_exit_">Для выхода нажмите \'Назад\' еще раз</string>
     <string name="dummy_content">магистральные\n маршруты</string>
-    <string name="title_activity_splash">магистральные маршруты</string>
+    <string name="title_activity_splash">OTH</string>
     <string name="scan_exit_message">Для выхода из приложения нажмите кнопку \"Назад\" еще раз.</string>
     <string name="barcode">ШК</string>
     <string name="enable_counter">использовать счетчик при просмотре информации о контейнере</string>
     <string name="setting_timeout">таймаут</string>
+    <string name="settings_reset">сбросить настройки</string>
 </resources>

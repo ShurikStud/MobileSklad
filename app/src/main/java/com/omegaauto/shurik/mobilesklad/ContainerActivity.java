@@ -8,10 +8,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,9 +54,11 @@ public class ContainerActivity extends AppCompatActivity {
 
     Container container;
 
-//    View header;
+//
+    Window window;
     TextView textViewContainer;
     TextView textViewCounter;
+    EditText editTextContainer;
 
     MobileSkladSettings mobileSkladSettings;
 
@@ -64,8 +71,9 @@ public class ContainerActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_container);
 
+        window = getWindow();
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (Build.VERSION.SDK_INT >= 21) {
-            Window window = getWindow();
             window.setStatusBarColor(getResources().getColor(R.color.colorBackgroundSeparatorCenter));
         }
 
@@ -73,21 +81,20 @@ public class ContainerActivity extends AppCompatActivity {
 
         View view = findViewById(R.id.activity_container_view);
 
-
-
         listView = (ListView) findViewById(R.id.activity_container_listView);
         textViewContainer = (TextView) findViewById(R.id.activity_container_textview_container_value);
         textViewCounter = (TextView) findViewById(R.id.activity_container_textview_counter);
+        editTextContainer = (EditText) findViewById(R.id.activity_container_edittext_container_value);
         progressBarHTTPService = (ProgressBar) findViewById(R.id.http_service_progress);
 
+        editTextContainer.setOnKeyListener(containerOnKeyListener);
+//        editTextContainer.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
 
-//        view.setOnKeyListener(containerOnKeyListener);
-//        listView.setOnKeyListener(containerOnKeyListener);
-
-
+        //editTextContainer.setShowSoftInputOnFocus(false);
 
         lastBarcode = MySharedPref.loadBarcode(context);
         container = MySharedPref.loadContainer(context);
+        scanBarcode = "";
 
         mobileSkladSettings = MobileSkladSettings.getInstance();
 
@@ -103,19 +110,17 @@ public class ContainerActivity extends AppCompatActivity {
             textViewCounter.setVisibility(View.INVISIBLE);
         }
 
-//        header = createHeader();
-//        listView.addHeaderView(header, null, false);
-
-        if (! barcode.equals(lastBarcode)) {
-            showProgress(true);
-            lastBarcode = barcode.toString();
-            setHeaderContainer();
-            new ProgressTask().execute(barcode);
-        } else {
-            showContainer();
-        }
+        updateView(barcode);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        editTextContainer.setFocusableInTouchMode(true);
+        editTextContainer.requestFocus();
+    }
+
 
     @Override
     protected void onPause() {
@@ -124,17 +129,17 @@ public class ContainerActivity extends AppCompatActivity {
         MySharedPref.saveContainer(context, container);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-
-
-        scanBarcode.concat(String.valueOf((char) keyCode));
-        if (keyCode == KeyEvent.KEYCODE_ENTER){
-            Toast.makeText(context, scanBarcode, Toast.LENGTH_SHORT).show();
-
+    private void updateView(String barcode){
+        if (! barcode.equals(lastBarcode)) {
+            showProgress(true);
+            lastBarcode = barcode.toString();
+            setHeaderContainer();
+            new ProgressTask().execute(barcode);
+        } else {
+            setHeaderContainer();
+            showContainer();
         }
-        return super.onKeyDown(keyCode, event);
     }
 
     private void showContainer(){
@@ -142,6 +147,8 @@ public class ContainerActivity extends AppCompatActivity {
         ContainerPropertiesSettings containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
         listView.setAdapter(new ContainerPropertiesAdapter(context, container, containerPropertiesSettings));
         showProgress(false);
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         if (isCounterEnable && mobileSkladSettings.getCounterEnable())
         new CounterTask().execute("");
@@ -327,28 +334,21 @@ public class ContainerActivity extends AppCompatActivity {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-            //Toast.makeText(context, keyCode, Toast.LENGTH_SHORT).show();
-
-            scanBarcode.concat(String.valueOf((char) keyCode));
-            if (keyCode == KeyEvent.KEYCODE_ENTER){
-                Toast.makeText(context, scanBarcode, Toast.LENGTH_SHORT).show();
-
+            if (v.getId() == R.id.activity_container_edittext_container_value){
+                if (keyCode == KeyEvent.KEYCODE_ENTER){
+                    if (editTextContainer.length() > 1){
+                        lastBarcode = editTextContainer.getText().toString();
+                        editTextContainer.setText("");
+                        updateView(lastBarcode);
+                        if (getCurrentFocus() != null) {
+                            InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
+                            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+                    } else {
+                        editTextContainer.setText("");
+                    }
+                }
             }
-
-
-//            if (v.getId() == R.id.activity_scan_edit_text_barcode){
-//                //textBarCodeLast.setText(textBarCodeLast.getText() + String.valueOf(keyCode)+ '_');
-//                if (keyCode == KeyEvent.KEYCODE_ENTER){
-////                    if (textBarCode.length() > 0){
-////                        startSearch(textBarCode.getText().toString(), false);
-////                    }
-//                }
-////                    startSearch();
-////                    //Toast.makeText(context,String.valueOf(keyCode), Toast.LENGTH_SHORT).show();
-////                }
-//            } else if (v.getId() == R.id.activity_scan_button_scan){
-//                return false;
-//            }
             return false;
         }
     }

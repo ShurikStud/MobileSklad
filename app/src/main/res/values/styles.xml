@@ -107,4 +107,11 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="zxing_CaptureTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+    </style>
+
+    <style name="Transparent">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
 </resources>

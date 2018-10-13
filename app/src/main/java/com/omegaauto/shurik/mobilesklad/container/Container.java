@@ -1,5 +1,12 @@
 package com.omegaauto.shurik.mobilesklad.container;
 
+import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+
+import com.omegaauto.shurik.mobilesklad.R;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,13 +30,24 @@ public class Container {
     String invoice_numbers; // (Номера РН )
     String type_pack; // (Тип упаковки)
     String weight; // (Вес, кг.)
+    String weightTotal; // (Вес, кг.) общий вес
 
     String amount_goods; // (Количество грузов)
+    String amount_goodsTotal; // (Количество грузов) общее количество
 
     String number; // (Номер тарного места)
+    String containersTotal; // общее число контейнеров на клиента
     String volume; // (Объем ТарногоМеста)
+    String volumeTotal; // (Объем ТарногоМеста) общий объем
+
+//    @ColorInt int colorMaster;
+//    @ColorInt int colorSlave;
 
     public Container() {
+
+//        colorMaster = context.getResources().getColor(R.color.colorTextEnable);
+//        colorSlave = context.getResources().getColor(R.color.black);
+
     }
 
     public String getPropertyValueString(String propertyName){
@@ -110,8 +128,21 @@ public class Container {
         this.trip_number = trip_number;
     }
 
+//    public SpannableStringBuilder getNn() {
+//        String textResult = nn + " / " + nnMax;
+//
+//        final SpannableStringBuilder str = new SpannableStringBuilder(textResult);
+//        str.setSpan(
+//                new ForegroundColorSpan(colorSlave),
+//                textResult.indexOf('/'),
+//                textResult.length()-1,
+//                SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//        return str;
+//    }
+
     public String getNn() {
-        return nn + " / " + nnMax ;
+        return nn + " / " + nnMax;
     }
 
     public void setNn(String nn) {
@@ -159,7 +190,7 @@ public class Container {
     }
 
     public String getWeight() {
-        return weight;
+        return weight + " / " + weightTotal;
     }
 
     public void setWeight(String weight) {
@@ -167,7 +198,7 @@ public class Container {
     }
 
     public String getAmount_goods() {
-        return amount_goods;
+        return amount_goods + " / " + amount_goodsTotal;
     }
 
     public void setAmount_goods(String amount_goods) {
@@ -175,15 +206,19 @@ public class Container {
     }
 
     public String getNumber() {
-        return number;
+        return number + " из " + containersTotal;
     }
 
     public void setNumber(String number) {
         this.number = number;
     }
 
+    public void setContainersTotal(String containersTotal) {
+        this.containersTotal = containersTotal;
+    }
+
     public String getVolume() {
-        return volume;
+        return volume + " / " + volumeTotal;
     }
 
     public void setVolume(String volume) {
@@ -196,6 +231,18 @@ public class Container {
 
     public void setNnMax(String nnMax) {
         this.nnMax = nnMax;
+    }
+
+    public void setWeightTotal(String weightTotal) {
+        this.weightTotal = weightTotal;
+    }
+
+    public void setAmount_goodsTotal(String amount_goodsTotal) {
+        this.amount_goodsTotal = amount_goodsTotal;
+    }
+
+    public void setVolumeTotal(String volumeTotal) {
+        this.volumeTotal = volumeTotal;
     }
 
     private String convertToNL(String inputString, char oldSymbol){
@@ -215,16 +262,20 @@ public class Container {
         zayavkaTEP_number = "нет данных";
         trip_number = "нет данных";
         nn = "нет данных";
+        nnMax = "нет данных";
         partner_address = "нет данных";
         partner_name = "нет данных";
         partner_phone = "нет данных";
         invoice_numbers = "нет данных";
         type_pack = "нет данных";
         weight = "нет данных";
+        weightTotal = "нет данных";
 
         amount_goods = "нет данных";
+        amount_goodsTotal = "нет данных";
 
         number = "нет данных";
+        containersTotal = "нет данных";
         volume = "нет данных";
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.omegaauto.shurik.mobilesklad.R;
+import com.omegaauto.shurik.mobilesklad.container.Container;
 import com.omegaauto.shurik.mobilesklad.utils.Const;
 import com.omegaauto.shurik.mobilesklad.container.ContainerPropertiesSettings;
 
@@ -25,9 +26,9 @@ public class MyItemOnDragListener implements View.OnDragListener{
         this.property = property;
         this.context = context;
 
-        drawable_visible = context.getDrawable(R.drawable.shape_row_visible);
-        drawable_invisible = context.getDrawable(R.drawable.shape_row_invisible);
-        drawable_separator = context.getDrawable(R.drawable.shape_row_separator);
+        drawable_visible = context.getResources().getDrawable(R.drawable.shape_row_visible);
+        drawable_invisible = context.getResources().getDrawable(R.drawable.shape_row_invisible);
+        drawable_separator = context.getResources().getDrawable(R.drawable.shape_row_separator);
 
     }
 
@@ -48,21 +49,15 @@ public class MyItemOnDragListener implements View.OnDragListener{
 
             case DragEvent.ACTION_DRAG_EXITED:
                 int index_exited = containerPropertiesSettings.getIndex(property);
-
-                if (index_exited == containerPropertiesSettings.getSeparator()) {
-//                    v.setBackgroundColor(Const.colorBackgroundSeparator);
-                    v.setBackground(drawable_separator);
-                } else if (index_exited < containerPropertiesSettings.getSeparator()) {
-//                    v.setBackgroundColor(Const.colorBackgroundVisible);
-                    v.setBackground(drawable_visible);
-                } else {
-//                    v.setBackgroundColor(Const.colorBackgroundInvisible);
-                    v.setBackground(drawable_invisible);
-                }
+                setBackground(v, index_exited);
                 break;
 
             case DragEvent.ACTION_DROP:
                 PassObject passObj = (PassObject) event.getLocalState();
+                if (passObj == null){
+                    // если бысто пытаться изменять порядок строк, то возвращает  null
+                    break;
+                }
                 View view = passObj.view;
                 ContainerPropertiesSettings.Property passedProperty = passObj.property;
                 ListView oldParent = (ListView)view.getParent();
@@ -83,36 +78,13 @@ public class MyItemOnDragListener implements View.OnDragListener{
                 }
 
                 int index_drop = containerPropertiesSettings.getIndex(property);
-
-                if (index_drop == containerPropertiesSettings.getSeparator()) {
-                    //v.setBackgroundColor(Const.colorBackgroundSeparator);
-                    v.setBackground(drawable_separator);
-                } else if (index_drop < containerPropertiesSettings.getSeparator()) {
-                    //v.setBackgroundColor(Const.colorBackgroundVisible);
-                    v.setBackground(drawable_visible);
-                } else {
-                    //v.setBackgroundColor(Const.colorBackgroundInvisible);
-                    v.setBackground(drawable_invisible);
-                }
-                //v.setBackgroundColor(resumeColor);
-
+                setBackground(v, index_drop);
                 break;
 
             case DragEvent.ACTION_DRAG_ENDED:
 
                 int index_ended = containerPropertiesSettings.getIndex(property);
-
-                if (index_ended == containerPropertiesSettings.getSeparator()) {
-                    //v.setBackgroundColor(Const.colorBackgroundSeparator);
-                    v.setBackground(drawable_separator);
-                } else if (index_ended < containerPropertiesSettings.getSeparator()) {
-                    //v.setBackgroundColor(Const.colorBackgroundVisible);
-                    v.setBackground(drawable_visible);
-                } else {
-                    //v.setBackgroundColor(Const.colorBackgroundInvisible);
-                    v.setBackground(drawable_invisible);
-                }
-
+                setBackground(v, index_ended);
                 break;
 
             default:
@@ -122,5 +94,20 @@ public class MyItemOnDragListener implements View.OnDragListener{
         return true;
 
     }
+
+    private void setBackground(View view, int index){
+
+        ContainerPropertiesSettings containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
+
+        if (index == containerPropertiesSettings.getSeparator()) {
+            view.setBackgroundResource(R.drawable.shape_row_separator);
+        } else if (index < containerPropertiesSettings.getSeparator()) {
+            view.setBackgroundResource(R.drawable.shape_row_visible);
+        } else {
+            view.setBackgroundResource(R.drawable.shape_row_invisible);
+        }
+
+    }
+
 
 }

@@ -17,9 +17,30 @@
     <string name="container">container</string>
     <string name="scan_not_found">Result Not Found</string>
     <string name="scan_exit_message">To exit, press \'back\' again</string>
-    <string name="title_activity_splash">trunk routes</string>
+    <string name="title_activity_splash">OTH</string>
     <string name="dummy_content">trunk\n routes</string>
     <string name="barcode">barcode</string>
     <string name="enable_counter">enable counter</string>
     <string name="setting_timeout">timeout</string>
+    <string name="settings_reset">reset</string>
+    <string-array name="font_id">
+        <item>SMALL</item>
+        <item>NORMAL</item>
+        <item>LARGE</item>
+    </string-array>
+    <string-array name="font_descr">
+        <item>small</item>
+        <item>normal</item>
+        <item>large</item>
+    </string-array>
+    <integer-array name="font_size_name">
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+    </integer-array>
+    <integer-array name="font_size_value">
+        <item>25</item>
+        <item>35</item>
+        <item>45</item>
+    </integer-array>
 </resources>

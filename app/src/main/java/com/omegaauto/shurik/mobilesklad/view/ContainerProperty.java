@@ -1,20 +1,40 @@
 package com.omegaauto.shurik.mobilesklad.view;
 
-public class ContainerProperty {
-    String value;
-    String name;
+import android.content.Context;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 
-    public ContainerProperty(String name, String value) {
-        this.value = value;
+import com.omegaauto.shurik.mobilesklad.R;
+
+public class ContainerProperty {
+
+    Context context;
+    //    String value;
+    SpannableStringBuilder value;
+    String name;
+    String spanDelimiter;
+
+
+    public ContainerProperty(Context context, String name, String value, String delimiter) {
+        this.context = context;
+        this.value = new SpannableStringBuilder(value);
         this.name = name;
+        this.spanDelimiter = delimiter;
     }
 
-    public String getValue() {
+    public SpannableStringBuilder getValue() {
+        if (spanDelimiter != null) {
+            value.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.black)),
+                    value.toString().indexOf(spanDelimiter),
+                    value.length(),
+                    SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return value;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.value.clear();
+        this.value.append(value);
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.omegaauto.shurik.mobilesklad">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -21,10 +22,13 @@
         <activity
             android:name=".ScanActivity"
             android:label="@string/activity_scan_desc"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation"/>
         <activity
             android:name=".ContainerActivity"
             android:label="@string/container"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".SettingsContainerFragment"
@@ -43,7 +47,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsAdditionalFragment"></activity>
+        <activity
+            android:name=".cameraScanBarCode.AnyOrientationCaptureActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
     </application>
 
 </manifest>

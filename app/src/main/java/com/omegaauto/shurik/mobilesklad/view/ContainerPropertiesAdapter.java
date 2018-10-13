@@ -24,7 +24,12 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
         properties = new ArrayList<ContainerProperty>();
 
         for (ContainerPropertiesSettings.Property property: containerPropertiesSettings.getVisibleProperties()) {
-            properties.add(new ContainerProperty(property.getDescription(), container.getPropertyValueString(property.getName())));
+            properties.add(new ContainerProperty(context,
+                    property.getDescription(),
+                    container.getPropertyValueString(property.getName()),
+                    property.getDelimiter())
+            );
+
         }
 
     }

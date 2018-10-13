@@ -23,37 +23,12 @@ public class SettingsContainerFragment extends Fragment {
     MyOnItemLongClickListener myOnItemLongClickListener;
     //MyItemOnDragListener myItemOnDragListener;
 
+    SettingsAdapter settingsAdapter;
+
     public static SettingsContainerFragment getInstance(){
         SettingsContainerFragment settingsContainerFragment = new SettingsContainerFragment();
         return settingsContainerFragment;
     }
-
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_settings);
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            Window window = getWindow();
-//            window.setStatusBarColor(getResources().getColor(R.color.colorBackgroundSeparatorCenter));
-//        }
-
-        myOnDragListener = new MyOnDragListener();
-        myOnItemLongClickListener = new MyOnItemLongClickListener();
-
-        linearLayout = (LinearLayout) findViewById(R.id.activity_settings_layout_list_view);
-        listView = (ListView) findViewById(R.id.activity_settings_list_view);
-
-        SettingsAdapter settingsAdapter = new SettingsAdapter(this);
-
-
-        listView.setAdapter(settingsAdapter);
-        listView.setOnDragListener(myOnDragListener);
-        listView.setOnItemLongClickListener(myOnItemLongClickListener);
-
-    }
-*/
 
     @Nullable
     @Override
@@ -67,7 +42,8 @@ public class SettingsContainerFragment extends Fragment {
         linearLayout = (LinearLayout) view.findViewById(R.id.activity_settings_layout_list_view);
         listView = (ListView) view.findViewById(R.id.activity_settings_list_view);
 
-        SettingsAdapter settingsAdapter = new SettingsAdapter(this.getContext());
+        settingsAdapter = new SettingsAdapter(this.getContext());
+        settingsAdapter.notifyDataSetChanged();
 
 
         listView.setAdapter(settingsAdapter);
@@ -86,9 +62,8 @@ public class SettingsContainerFragment extends Fragment {
         }
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        MySharedPref.saveSettings(this);
-//    }
+    public void updateView(){
+        settingsAdapter.notifyDataSetChanged();
+    }
+
 }

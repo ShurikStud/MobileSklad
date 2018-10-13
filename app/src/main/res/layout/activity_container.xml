@@ -73,6 +73,31 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_container_header2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_container_listView"
+        app:layout_constraintVertical_weight="1">
+
+        <EditText
+            android:id="@+id/activity_container_edittext_container_value"
+            style="@style/TextStyleContainerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text=""
+            app:layout_constraintHorizontal_weight="4"/>
+
+    </android.support.constraint.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/http_service_progress"
         style="?android:attr/progressBarStyleSmall"

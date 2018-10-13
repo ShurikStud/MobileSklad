@@ -1,10 +1,13 @@
 package com.omegaauto.shurik.mobilesklad;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.omegaauto.shurik.mobilesklad.cameraScanBarCode.AnyOrientationCaptureActivity;
 
 public class ScanActivity extends AppCompatActivity {
 
@@ -31,11 +35,14 @@ public class ScanActivity extends AppCompatActivity {
     private boolean previewing = true;
 */
 
-    ScanListener scanListener;
     ScanOnKeyListener scanOnKeyListener;
+    ScanOnClickListener scanOnClickListener;
 
     EditText textBarCode;
     EditText textBarCodeLast;
+
+    FloatingActionButton buttonSettings;
+
     Button buttonSearch;
     Button buttonScan;
 
@@ -55,29 +62,47 @@ public class ScanActivity extends AppCompatActivity {
 
         context = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextEnable));
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextEnable));
+//        setSupportActionBar(toolbar);
 
-        scanListener = new ScanListener();
         scanOnKeyListener = new ScanOnKeyListener();
+        scanOnClickListener = new ScanOnClickListener();
 
         textBarCode = (EditText) findViewById(R.id.activity_scan_edit_text_barcode);
         textBarCodeLast = (EditText) findViewById(R.id.activity_scan_edit_text_barcode_last);
         buttonSearch = (Button) findViewById(R.id.activity_scan_button_search);
         buttonScan = (Button) findViewById(R.id.activity_scan_button_scan);
+        buttonSettings = (FloatingActionButton) findViewById(R.id.activity_scan_button_settings);
 
-        buttonSearch.setOnClickListener(scanListener);
-        buttonScan.setOnClickListener(scanListener);
-        textBarCodeLast.setOnClickListener(scanListener);
+        buttonSearch.setOnClickListener(scanOnClickListener);
+        buttonScan.setOnClickListener(scanOnClickListener);
+        buttonSettings.setOnClickListener(scanOnClickListener);
+        textBarCodeLast.setOnClickListener(scanOnClickListener);
 
         textBarCode.setOnKeyListener(scanOnKeyListener);
         buttonScan.setOnKeyListener(scanOnKeyListener);
+        textBarCode.setOnClickListener(scanOnClickListener);
 
+/*
         qrScan = new IntentIntegrator(this);
+        //Fragment fragment = new Fragment();
+        //qrScan = IntentIntegrator.forFragment(fragment);
         //qrScan.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         qrScan.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        qrScan.setOrientationLocked(false);
+        //qrScan.setBarcodeImageEnabled(true);
+        Intent scanIntent = qrScan.createScanIntent();
+*/
 
+
+        qrScan = new IntentIntegrator(this);
+        qrScan.setCaptureActivity(AnyOrientationCaptureActivity.class);
+        qrScan.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        qrScan.setPrompt("Scan something");
+        qrScan.setOrientationLocked(true);
+        qrScan.setBeepEnabled(false);
+        //integrator.initiateScan();
 
 
   /*      autoFocusHandler = new Handler();
@@ -159,24 +184,24 @@ public class ScanActivity extends AppCompatActivity {
         //super.onBackPressed();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.toolbar, menu);
+//        return true;
+//
+//    }
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_settings){
-//            Intent intent = new Intent(this, SettingsContainerFragment.class);
-            Intent intent = new Intent(this, SettingsPagersActivity.class);
-            startActivity(intent);
-        }
-        return true;
-
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == R.id.action_settings){
+////            Intent intent = new Intent(this, SettingsContainerFragment.class);
+//            Intent intent = new Intent(this, SettingsPagersActivity.class);
+//            startActivity(intent);
+//        }
+//        return true;
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -187,7 +212,7 @@ public class ScanActivity extends AppCompatActivity {
             if (result.getContents() == null) {
                 Toast.makeText(this, R.string.scan_not_found, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 //textBarCode.setText(result.getContents());
                 startSearch(result.getContents(), true);
             }
@@ -239,7 +264,7 @@ public class ScanActivity extends AppCompatActivity {
         }
     }*/
 
-    class ScanListener implements View.OnClickListener{
+    class ScanOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.activity_scan_button_scan){
@@ -257,6 +282,15 @@ public class ScanActivity extends AppCompatActivity {
                     startSearch(textBarCodeLast.getText().toString(), false);
                 }
             }
+            if (v.getId() == R.id.activity_scan_edit_text_barcode) {
+                textBarCode.setInputType(InputType.TYPE_MASK_CLASS);
+            }
+
+            if (v.getId() == R.id.activity_scan_button_settings){
+                Intent intent = new Intent(context, SettingsPagersActivity.class);
+                startActivity(intent);
+            }
+
         }
     }
 
@@ -280,6 +314,7 @@ public class ScanActivity extends AppCompatActivity {
             return false;
         }
     }
+
 
 
 }

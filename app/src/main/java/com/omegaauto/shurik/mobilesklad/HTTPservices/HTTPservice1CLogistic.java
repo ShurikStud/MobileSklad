@@ -48,6 +48,8 @@ public class HTTPservice1CLogistic {
                 container.setPartner_name(jsonObjectData.getString("partner_name"));
             if (jsonObjectData.has("number"))
                 container.setNumber(jsonObjectData.getString("number"));
+            if (jsonObjectData.has("containersTotal"))
+                container.setContainersTotal(jsonObjectData.getString("containersTotal"));
             if (jsonObjectData.has("nn"))
                 container.setNn(jsonObjectData.getString("nn"));
             if (jsonObjectData.has("nnMax"))
@@ -58,6 +60,8 @@ public class HTTPservice1CLogistic {
                 container.setDriver_name(jsonObjectData.getString("driver_name"));
             if (jsonObjectData.has("amount_goods"))
                 container.setAmount_goods(jsonObjectData.getString("amount_goods"));
+            if (jsonObjectData.has("amount_goodsTotal"))
+                container.setAmount_goodsTotal(jsonObjectData.getString("amount_goodsTotal"));
             if (jsonObjectData.has("partner_address"))
                 container.setPartner_address(jsonObjectData.getString("partner_address"));
             if (jsonObjectData.has("partner_phone"))
@@ -66,8 +70,12 @@ public class HTTPservice1CLogistic {
                 container.setType_pack(jsonObjectData.getString("type_pack"));
             if (jsonObjectData.has("volume"))
                 container.setVolume(jsonObjectData.getString("volume"));
+            if (jsonObjectData.has("volumeTotal"))
+                container.setVolumeTotal(jsonObjectData.getString("volumeTotal"));
             if (jsonObjectData.has("weight"))
                 container.setWeight(jsonObjectData.getString("weight"));
+            if (jsonObjectData.has("weightTotal"))
+                container.setWeightTotal(jsonObjectData.getString("weightTotal"));
             if (jsonObjectData.has("zayavkaTEP_highway_date"))
                 container.setZayavkaTEP_highway_date(jsonObjectData.getString("zayavkaTEP_highway_date"));
             if (jsonObjectData.has("zayavkaTEP_highway_number"))
@@ -79,25 +87,10 @@ public class HTTPservice1CLogistic {
             errorString = ex.toString();
         }
 
-
-
         Container container = new Container();
 
         return container;
 
- /*       container.setAmount_goods("10");
-        container.setDriver_name("Driver 007 фамилия имя отчество");
-        container.setInvoice_numbers("38320");
-        container.setNn("1");
-        container.setNumber("12");
-        container.setPartner_name("Contragent 001 фирма далеко от сюда");
-        container.setZayavkaTEP_highway_number("ХВ-00012345");
-        container.setZayavkaTEP_number("ХВ-00088991");
-        container.setTrip_number("324134");
-        container.setVehicle_name("АХ 0777 ВР");
-
-        return container;
-*/
     }
 
     public String getErrorString() {
