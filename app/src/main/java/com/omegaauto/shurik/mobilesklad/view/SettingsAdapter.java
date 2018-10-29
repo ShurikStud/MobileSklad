@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.omegaauto.shurik.mobilesklad.R;
 import com.omegaauto.shurik.mobilesklad.container.ContainerPropertiesSettings;
+import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
 
 public class SettingsAdapter extends BaseAdapter {
 
@@ -26,11 +28,13 @@ public class SettingsAdapter extends BaseAdapter {
 
     private Context context;
     private ContainerPropertiesSettings containerPropertiesSettings;
+    private MobileSkladSettings mobileSkladSettings;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SettingsAdapter(Context context){
         this.context = context;
         containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
+        mobileSkladSettings = MobileSkladSettings.getInstance();
     }
     @Override
     public int getCount() {
@@ -78,12 +82,14 @@ public class SettingsAdapter extends BaseAdapter {
         if (position < containerPropertiesSettings.getSeparator()) {
             rowView.setBackgroundResource(R.drawable.shape_row_visible);
             viewHolder.text.setTextColor(context.getResources().getColor(R.color.colorTextEnable));
+            viewHolder.text.setTextSize(TypedValue.COMPLEX_UNIT_SP, mobileSkladSettings.getFontSize().getSizeValue());
         } else if (position == containerPropertiesSettings.getSeparator()) {
             rowView.setBackgroundResource(R.drawable.shape_row_separator);
             viewHolder.text.setText(null);
         } else {
             rowView.setBackgroundResource(R.drawable.shape_row_invisible);
             viewHolder.text.setTextColor(context.getResources().getColor(R.color.colorTextDisable));//0xff990044
+            viewHolder.text.setTextSize(TypedValue.COMPLEX_UNIT_SP, mobileSkladSettings.getFontSize().getSizeValue());
        }
 
         if (position != containerPropertiesSettings.getSeparator()) {

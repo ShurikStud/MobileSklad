@@ -1,6 +1,7 @@
 package com.omegaauto.shurik.mobilesklad.view;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.omegaauto.shurik.mobilesklad.R;
 import com.omegaauto.shurik.mobilesklad.container.Container;
 import com.omegaauto.shurik.mobilesklad.container.ContainerPropertiesSettings;
+import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,9 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
 
         viewHolder.textValue.setText(containerProperty.getValue());
         viewHolder.textName.setText(containerProperty.getName());
+
+        viewHolder.textValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, MobileSkladSettings.getInstance().getFontSize().getSizeValue());
+        viewHolder.textName.setTextSize(TypedValue.COMPLEX_UNIT_SP, MobileSkladSettings.getInstance().getFontSize().getSizeName());
 
         return row;
     }

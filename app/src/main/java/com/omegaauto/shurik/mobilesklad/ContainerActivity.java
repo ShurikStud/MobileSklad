@@ -167,20 +167,6 @@ public class ContainerActivity extends AppCompatActivity {
 
     private class ProgressTask extends AsyncTask<String, Void, String> {
 
-//        private String readStream(InputStream is) {
-//            try {
-//                ByteArrayOutputStream bo = new ByteArrayOutputStream();
-//                int i = is.read();
-//                while(i != -1) {
-//                    bo.write(i);
-//                    i = is.read();
-//                }
-//                return bo.toString();
-//            } catch (IOException e) {
-//                return "";
-//            }
-//        }
-
         @Override
         protected String doInBackground(String... strings) {
 

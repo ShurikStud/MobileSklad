@@ -277,6 +277,7 @@ public class Container {
         number = "нет данных";
         containersTotal = "нет данных";
         volume = "нет данных";
+        volumeTotal = "нет данных";
     }
 
     @Override

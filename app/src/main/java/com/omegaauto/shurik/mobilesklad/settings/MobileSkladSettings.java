@@ -20,7 +20,7 @@ public final class MobileSkladSettings {
 
         if (instance == null){
             instance = new MobileSkladSettings();
-
+            instance.setCurrentVersion();
         }
 
         return instance;

@@ -95,6 +95,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="background">@drawable/shape_spinner</item>
+    </style>
+
     <style name="FullscreenTheme" parent="AppTheme.NoActionBar">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>

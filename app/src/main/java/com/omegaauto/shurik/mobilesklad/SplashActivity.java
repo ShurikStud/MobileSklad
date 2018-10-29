@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 try {
 
-                    int logotime    = 8000;
+                    int logotime    = 800;
 
                     ListFontSizes listFontSizes = ListFontSizes.getInstance();
                     listFontSizes.init(activity.getBaseContext());

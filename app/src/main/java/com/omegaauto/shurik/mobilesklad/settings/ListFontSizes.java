@@ -65,7 +65,15 @@ public final class ListFontSizes {
         return null;
     }
 
+    public int getPosition(MobileSkladFontSize mobileSkladFontSize){
+        return mobileSkladFontSizeList.indexOf(mobileSkladFontSize);
+    }
+
     public MobileSkladFontSize getDefault(){
         return get("NORMAL");
+    }
+
+    public int getCount(){
+        return mobileSkladFontSizeList.size();
     }
 }

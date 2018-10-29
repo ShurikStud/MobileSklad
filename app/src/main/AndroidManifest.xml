@@ -35,7 +35,8 @@
             android:label="@string/activity_settings_desc" />
         <activity
             android:name=".SettingsPagersActivity"
-            android:label="@string/activity_settings_desc" />
+            android:label="@string/activity_settings_desc"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

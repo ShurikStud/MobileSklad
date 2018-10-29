@@ -25,4 +25,11 @@
     <string name="enable_counter">использовать счетчик при просмотре информации о контейнере</string>
     <string name="setting_timeout">таймаут</string>
     <string name="settings_reset">сбросить настройки</string>
+    <string name="font">шрифт</string>
+    <string-array name="font_descr">
+        <item>мелкий</item>
+        <item>средний</item>
+        <item>крупный</item>
+    </string-array>
+    <string name="settings_reset_message">установлены настройки по умолчанию</string>
 </resources>

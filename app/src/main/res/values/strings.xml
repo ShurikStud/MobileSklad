@@ -22,7 +22,9 @@
     <string name="barcode">barcode</string>
     <string name="enable_counter">enable counter</string>
     <string name="setting_timeout">timeout</string>
-    <string name="settings_reset">reset</string>
+    <string name="settings_reset">reset setting</string>
+    <string name="settings_reset_message">reset complete</string>
+    <string name="font">font</string>
     <string-array name="font_id">
         <item>SMALL</item>
         <item>NORMAL</item>
@@ -34,13 +36,13 @@
         <item>large</item>
     </string-array>
     <integer-array name="font_size_name">
-        <item>20</item>
-        <item>30</item>
-        <item>40</item>
+        <item>15</item>
+        <item>22</item>
+        <item>35</item>
     </integer-array>
     <integer-array name="font_size_value">
         <item>25</item>
-        <item>35</item>
+        <item>32</item>
         <item>45</item>
     </integer-array>
 </resources>
