@@ -25,6 +25,7 @@
     <string name="settings_reset">reset setting</string>
     <string name="settings_reset_message">reset complete</string>
     <string name="font">font</string>
+    <string name="copied">was copied</string>
     <string-array name="font_id">
         <item>SMALL</item>
         <item>NORMAL</item>
@@ -45,4 +46,5 @@
         <item>32</item>
         <item>45</item>
     </integer-array>
+    <string name="value">value</string>
 </resources>

@@ -5,6 +5,7 @@ import java.util.List;
 
 public final class ContainerPropertiesSettings {
     // класс настроек порядка и видимости реквизитов КОНТЕЙНЕРа (Container)
+    // Элемент в позиции 0 содержит последний номер контейнера, который искали.
 
     private static final int PROPERTIES_VERSION = 9;
     int current_version;

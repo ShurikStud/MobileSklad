@@ -51,7 +51,8 @@ public class SplashActivity extends AppCompatActivity {
                         logotime-=200;
                     }
 
-                    startActivity(new Intent(activity, MainActivity.class));
+                    //startActivity(new Intent(activity, MainActivity.class));
+                    startActivity(new Intent(activity, ContainerActivity.class));
 
                 } catch (InterruptedException interrEx){
 

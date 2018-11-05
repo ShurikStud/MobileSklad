@@ -21,7 +21,7 @@ public class Container {
     String zayavkaTEP_highway_date; // (Дата Заявки ТЭП магистральной)
     String zayavkaTEP_highway_number; // (№ Заявки ТЭП магистральной)
     String zayavkaTEP_number; // (№ Заявки ТЭП подчиненной)
-    String trip_number; // (№ рейса)
+    String trip_number = ""; // (№ рейса)
     String nn; // (№ по порядку в карте погрузки)
     String nnMax; // (№ по порядку в карте погрузки)
     String partner_address; // (Адрес доставки (Строка))

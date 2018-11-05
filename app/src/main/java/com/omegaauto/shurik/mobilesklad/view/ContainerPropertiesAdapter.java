@@ -1,12 +1,18 @@
 package com.omegaauto.shurik.mobilesklad.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.omegaauto.shurik.mobilesklad.R;
 import com.omegaauto.shurik.mobilesklad.container.Container;
@@ -15,6 +21,8 @@ import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class ContainerPropertiesAdapter extends BaseAdapter {
 
@@ -74,6 +82,8 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) row.getTag();
         }
 
+        row.setOnLongClickListener(new PropertyOnLongClickListener());
+
 
         viewHolder.textValue.setText(containerProperty.getValue());
         viewHolder.textName.setText(containerProperty.getName());
@@ -88,5 +98,23 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
         TextView textValue;
         TextView textName;
     }
+
+    class PropertyOnLongClickListener implements View.OnLongClickListener{
+        @Override
+        public boolean onLongClick(View view) {
+            ViewHolder viewHolder = (ViewHolder) view.getTag();
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("", viewHolder.textValue.getText());
+            clipboard.setPrimaryClip(clip);
+
+            String textMessage = context.getResources().getString(R.string.value) + "\n" + viewHolder.textName.getText() + "\n" + context.getResources().getString(R.string.copied);
+
+            Toast toast = Toast.makeText(context, textMessage , Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,0 , 0);
+            toast.show();
+            return false;
+        }
+    }
+
 
 }

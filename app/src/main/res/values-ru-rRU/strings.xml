@@ -15,9 +15,8 @@
     <string name="activity_scan_desc">сканировать ШК</string>
     <string name="activity_settings_desc">настройки видимости</string>
     <string name="activity_login_desc">авторизация</string>
-    <string name="container">контейнер</string>
+    <string name="container">номер контейнера</string>
     <string name="scan_not_found">Не найден ШК</string>
-    <string name="scan_exit_">Для выхода нажмите \'Назад\' еще раз</string>
     <string name="dummy_content">магистральные\n маршруты</string>
     <string name="title_activity_splash">OTH</string>
     <string name="scan_exit_message">Для выхода из приложения нажмите кнопку \"Назад\" еще раз.</string>
@@ -32,4 +31,6 @@
         <item>крупный</item>
     </string-array>
     <string name="settings_reset_message">установлены настройки по умолчанию</string>
+    <string name="copied">было скопировано</string>
+    <string name="value">значение</string>
 </resources>

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.omegaauto.shurik.mobilesklad.HTTPservices.HTTPservice1CLogistic;
+import com.omegaauto.shurik.mobilesklad.container.ContainerListLast;
+import com.omegaauto.shurik.mobilesklad.container.NumberListLast;
+import com.omegaauto.shurik.mobilesklad.controller.ControllerContainers;
 import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
 import com.omegaauto.shurik.mobilesklad.utils.Const;
 import com.omegaauto.shurik.mobilesklad.container.Container;
@@ -44,6 +48,9 @@ import static java.lang.Thread.sleep;
 
 public class ContainerActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CONTAINER_NUMBER  = 100;
+    private static final int REQUEST_RESULT_OK = 1;
+
     String lastBarcode = "";
     String scanBarcode = "";
     Boolean isCounterEnable = false;
@@ -62,7 +69,12 @@ public class ContainerActivity extends AppCompatActivity {
 
     MobileSkladSettings mobileSkladSettings;
 
+    ControllerContainers controllerContainers;
+
     ContainerOnKeyListener containerOnKeyListener;
+    ContainerOnClickListener containerOnClickListener;
+
+    long lastTimeBackPressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +89,9 @@ public class ContainerActivity extends AppCompatActivity {
             window.setStatusBarColor(getResources().getColor(R.color.colorBackgroundSeparatorCenter));
         }
 
+        controllerContainers = new ControllerContainers();
         containerOnKeyListener = new ContainerOnKeyListener();
+        containerOnClickListener = new ContainerOnClickListener();
 
         View view = findViewById(R.id.activity_container_view);
 
@@ -88,6 +102,7 @@ public class ContainerActivity extends AppCompatActivity {
         progressBarHTTPService = (ProgressBar) findViewById(R.id.http_service_progress);
 
         editTextContainer.setOnKeyListener(containerOnKeyListener);
+        textViewContainer.setOnClickListener(containerOnClickListener);
 //        editTextContainer.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
 
         //editTextContainer.setShowSoftInputOnFocus(false);
@@ -98,19 +113,20 @@ public class ContainerActivity extends AppCompatActivity {
 
         mobileSkladSettings = MobileSkladSettings.getInstance();
 
-        String barcode = getIntent().getStringExtra("Barcode");
-        scanBarcode = "";
+        //String barcode = getIntent().getStringExtra("Barcode");
+        //scanBarcode = "";
 
         //if (getIntent().hasExtra("CounterEnable"))
-        isCounterEnable = getIntent().getBooleanExtra("CounterEnable", false);
+        //isCounterEnable = getIntent().getBooleanExtra("CounterEnable", false);
 
-        if (isCounterEnable && mobileSkladSettings.getCounterEnable()) {
-            textViewCounter.setVisibility(View.VISIBLE);
-        }else {
-            textViewCounter.setVisibility(View.INVISIBLE);
-        }
+//        if (isCounterEnable && mobileSkladSettings.getCounterEnable()) {
+//            textViewCounter.setVisibility(View.VISIBLE);
+//        }else {
+//            textViewCounter.setVisibility(View.INVISIBLE);
+//        }
 
-        updateView(barcode);
+//        updateView(barcode);
+        updateView(null);
 
     }
 
@@ -129,8 +145,45 @@ public class ContainerActivity extends AppCompatActivity {
         MySharedPref.saveContainer(context, container);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CONTAINER_NUMBER) {
+            if (resultCode == REQUEST_RESULT_OK) {
+                String barcode = data.getStringExtra("Barcode");
+                updateView(barcode);
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        long currentTimeMillis = System.currentTimeMillis();
+
+        if ( (currentTimeMillis - 1000) > lastTimeBackPressed) {
+            lastTimeBackPressed = currentTimeMillis;
+            Toast.makeText(context,R.string.scan_exit_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        finish();
+        System.exit(0);
+
+        //super.onBackPressed();
+    }
+
 
     private void updateView(String barcode){
+
+        if (barcode == null) {
+            showContainer();
+            return;
+        }
+
+        NumberListLast.getInstance().setCurrentNumber(barcode);
+
         if (! barcode.equals(lastBarcode)) {
             showProgress(true);
             lastBarcode = barcode.toString();
@@ -151,7 +204,7 @@ public class ContainerActivity extends AppCompatActivity {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         if (isCounterEnable && mobileSkladSettings.getCounterEnable())
-        new CounterTask().execute("");
+            new CounterTask().execute("");
     }
 
 //    private View createHeader(){
@@ -182,7 +235,6 @@ public class ContainerActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-
             super.onPostExecute(result);
 
             if (result == "") {
@@ -200,9 +252,8 @@ public class ContainerActivity extends AppCompatActivity {
                     lastBarcode = "";
                 }
             }
-
+            //ContainerListLast.getInstance().addContainer(container);
             showContainer();
-
          }
 
         private String getResponse(String barcode) throws IOException{
@@ -336,6 +387,13 @@ public class ContainerActivity extends AppCompatActivity {
                 }
             }
             return false;
+        }
+    }
+
+    class ContainerOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            startActivityForResult(new Intent(context, NumberContainerActivity.class), REQUEST_CONTAINER_NUMBER);
         }
     }
 
