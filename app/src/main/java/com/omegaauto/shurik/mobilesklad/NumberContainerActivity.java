@@ -1,26 +1,28 @@
 package com.omegaauto.shurik.mobilesklad;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.omegaauto.shurik.mobilesklad.container.Container;
-//import com.omegaauto.shurik.mobilesklad.container.ContainerListLast;
-//import com.omegaauto.shurik.mobilesklad.view.ContainerListLastAdapter;
 import com.omegaauto.shurik.mobilesklad.container.NumberListLast;
 import com.omegaauto.shurik.mobilesklad.view.NumberListAdapter;
 
+import java.util.List;
+
 public class NumberContainerActivity extends AppCompatActivity {
 
-    private static final int REQUEST_RESULT_OK = 1;
+    public static final int REQUEST_RESULT_OK = 1;
 
     ImageButton buttonSearch;
     EditText editTextContainer;
@@ -34,41 +36,48 @@ public class NumberContainerActivity extends AppCompatActivity {
 
         editTextContainer = (EditText) findViewById(R.id.activity_number_container_edit_text);
         buttonSearch = (ImageButton) findViewById(R.id.activity_number_container_button_search);
-        //recyclerView = (RecyclerView) findViewById(R.id.activity_number_container_recycler_view);
 
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        ContainerListLastAdapter containerListLastAdapter = new ContainerListLastAdapter();
-//        recyclerView.setAdapter(containerListLastAdapter);
         NumberListAdapter numberListAdapter = new NumberListAdapter(this);
-        //recyclerView.setAdapter(numberListAdapter);
 
         listView = findViewById(R.id.activity_number_container_list_view);
         listView.setAdapter(numberListAdapter);
 
-        ScanOnClickListener scanOnClickListener = new ScanOnClickListener();
-        buttonSearch.setOnClickListener(scanOnClickListener);
+        NumberOnClickListener numberOnClickListener = new NumberOnClickListener();
+        buttonSearch.setOnClickListener(numberOnClickListener);
 
         editTextContainer.setText(NumberListLast.getInstance().getCurrentNumber());
-        editTextContainer.selectAll();
+        editTextContainer.setSelectAllOnFocus(true);
+        //editTextContainer.setOnClickListener(numberOnClickListener);
+        editTextContainer.setOnTouchListener(new NumberOnTouchListener());
+        //editTextContainer.selectAll();
+
+        //editTextContainer.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_CLASS_TEXT);
+        Window window = getWindow();
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        editTextContainer.setFocusable(true);
-        editTextContainer.requestFocus();
-        editTextContainer.selectAll();
+//        editTextContainer.setFocusable(true);
+//        editTextContainer.requestFocus();
+//        editTextContainer.selectAll();
 
     }
 
     protected void startSearch(String barcode){
+
+        InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
         Intent intent = new Intent();
         intent.putExtra("Barcode", barcode);
         setResult(REQUEST_RESULT_OK, intent);
         finish();
    }
 
-    class ScanOnClickListener implements View.OnClickListener{
+    class NumberOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.activity_number_container_button_search){
@@ -77,6 +86,29 @@ public class NumberContainerActivity extends AppCompatActivity {
                 }
                 return;
             }
+//            if (v.getId() == R.id.activity_number_container_edit_text){
+//                editTextContainer.selectAll();
+//            }
+        }
+    }
+
+    class NumberOnTouchListener implements View.OnTouchListener{
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+//            if (motionEvent.getAction() == MotionEvent.ACTION_UP && view.getId() == R.id.activity_number_container_edit_text){
+//                //editTextContainer.;
+//                editTextContainer.selectAll();
+//
+//            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && view.getId() == R.id.activity_number_container_edit_text){
+
+//                InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_UNCHANGED_SHOWN);
+
+            }
+
+            return false;
         }
     }
 

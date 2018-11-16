@@ -5,20 +5,38 @@ import com.omegaauto.shurik.mobilesklad.container.Container;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HTTPservice1CLogistic {
+public class ParserHttpResponse {
 
-    String errorString;
+    private String errorString;
 
-    public HTTPservice1CLogistic() {
+    private String stringContainerInfo = "";
+    private String stringTokenInfo = "";
+
+    public ParserHttpResponse() {
         errorString = new String();
     }
 
-    public Container getContainerInfo(String jsonString){
+    public void setContainerInfoString(String jsonString){
+        stringContainerInfo = jsonString;
+    }
+
+    public void setTokenInfoString(String jsonString){
+        stringTokenInfo = jsonString;
+    }
+
+    public Container getContainerInfo(){
 
         errorString = "";
 
+        if (stringContainerInfo==null || stringContainerInfo.isEmpty()){
+            errorString = "getContainerInfo():: нет данных для расшифровки";
+            Container container = new Container();
+            container.setNoData();
+            return container;
+        }
+
         try {
-            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONObject jsonObject = new JSONObject(stringContainerInfo);
             JSONObject jsonObjectStatus = (JSONObject) jsonObject.get("Status");
             JSONObject jsonObjectData = (JSONObject) jsonObject.get("Data");
 

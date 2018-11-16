@@ -1,15 +1,18 @@
 package com.omegaauto.shurik.mobilesklad.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.omegaauto.shurik.mobilesklad.NumberContainerActivity;
 import com.omegaauto.shurik.mobilesklad.R;
 import com.omegaauto.shurik.mobilesklad.container.NumberListLast;
 import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
@@ -17,37 +20,12 @@ import com.omegaauto.shurik.mobilesklad.settings.MobileSkladSettings;
 public class NumberListAdapter extends BaseAdapter {
 
     private NumberListLast numberListLast;
-    Context context;
+    NumberContainerActivity context;
 
     public NumberListAdapter(Context context) {
-        this.context = context;
+        this.context = (NumberContainerActivity) context;
         numberListLast = NumberListLast.getInstance();
     }
-
-
-
-
-
-
-//    @NonNull
-//    @Override
-//    public NumberViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//
-//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_number_container_item, parent, false);
-//        NumberViewHolder numberViewHolder = new NumberViewHolder(v);
-//        return numberViewHolder;
-//
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder numberViewHolder, int position) {
-//        ((NumberViewHolder) numberViewHolder).textViewNumber.setText(numberListLast.getNumber(position));
-//    }
-
-//    @Override
-//    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-//        super.onAttachedToRecyclerView(recyclerView);
-//    }
 
     @Override
     public int getCount() {
@@ -89,9 +67,13 @@ public class NumberListAdapter extends BaseAdapter {
         }
 
         //row.setOnLongClickListener(new PropertyOnLongClickListener());
+        row.setOnClickListener(new NumberListOnClickListener());
+        //row.setOnTouchListener(new NumberListOnTouchListener());
 
         viewHolder.textViewNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, MobileSkladSettings.getInstance().getFontSize().getSizeValue());
         viewHolder.textViewNumber.setText(number);
+        //viewHolder.textViewNumber.setOnClickListener(new NumberListOnClickListener());
+        viewHolder.textViewNumber.setOnTouchListener(new NumberListOnTouchListener());
 
         return row;
 
@@ -103,5 +85,37 @@ public class NumberListAdapter extends BaseAdapter {
 //            super(itemView);
 //            textViewNumber = (TextView) itemView.findViewById(R.id.activity_number_container_item_text_view);
 //        }
+    }
+
+    protected void startSearch(String barcode){
+        Intent intent = new Intent();
+        intent.putExtra("Barcode", barcode);
+        context.setResult(NumberContainerActivity.REQUEST_RESULT_OK, intent);
+        context.finish();
+    }
+
+    class NumberListOnClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            TextView textView = (TextView) view.getTag();
+                String barcode = (String) textView.getText();
+                if (!barcode.isEmpty()) {
+                    startSearch(barcode);
+                }
+        }
+    }
+
+    class NumberListOnTouchListener implements View.OnTouchListener{
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN ){
+                String barcode = (String) ((TextView)view).getText();
+                if (!barcode.isEmpty()) {
+                    startSearch(barcode);
+                }
+            }
+            return false;
+        }
     }
 }

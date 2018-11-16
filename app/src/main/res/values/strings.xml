@@ -1,4 +1,4 @@
-<resources>
+    <resources>
     <string name="app_name">MobileSklad</string>
     <string name="main_radioButton_online">online</string>
     <string name="main_radioButton_offline">offline</string>
@@ -26,6 +26,9 @@
     <string name="settings_reset_message">reset complete</string>
     <string name="font">font</string>
     <string name="copied">was copied</string>
+    <string name="press_vol_minus">vol-</string>
+    <string name="mode">mode</string>
+    <string name="zayavkiTEP">zayavki TEP</string>
     <string-array name="font_id">
         <item>SMALL</item>
         <item>NORMAL</item>

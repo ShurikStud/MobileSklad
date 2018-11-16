@@ -11,9 +11,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/sklad"
+        android:icon="@mipmap/logo_omega"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/sklad"
+        android:roundIcon="@mipmap/logo_omega"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
@@ -41,7 +41,7 @@
             android:name=".NumberContainerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Transparent"
-            android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
