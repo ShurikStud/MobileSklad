@@ -69,7 +69,7 @@ public class NumberContainerActivity extends AppCompatActivity {
     protected void startSearch(String barcode){
 
         InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
         Intent intent = new Intent();
         intent.putExtra("Barcode", barcode);

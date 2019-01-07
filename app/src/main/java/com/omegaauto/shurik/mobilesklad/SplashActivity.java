@@ -44,6 +44,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     MySharedPref.loadSettings(activity.getBaseContext());
                     MySharedPref.loadMobileSkladSettings(activity.getBaseContext());
+                    MySharedPref.loadZayavkaTEPList(activity.getBaseContext());
 
                     while (logotime > 0){
 

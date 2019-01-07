@@ -4,7 +4,7 @@
     <string name="main_radioButton_online">онлайн</string>
     <string name="main_radioButton_offline">оффлайн</string>
     <string name="main_radioButton_offline_online">оффлайн + онлайн</string>
-    <string name="action_sign_in">старт</string>
+    <string name="action_sign_in">авторизация</string>
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">пароль</string>
     <string name="activity_main_switch_autologin">автоматическая регистрация</string>
@@ -36,4 +36,10 @@
     <string name="press_vol_minus">vol-</string>
     <string name="mode">режим</string>
     <string name="zayavkiTEP">заявки ТЭП</string>
+    <string name="error_invalid_email">Формат email неверный</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неверный пароль</string>
+    <string name="error_incorrect_email">Пользователь с указанным email не зарегистрирован</string>
+    <string name="action_sign_out">выход</string>
+    <string name="prompt_user_name">имя пользователя</string>
 </resources>

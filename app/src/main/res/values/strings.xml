@@ -1,9 +1,11 @@
-    <resources>
+<resources>
     <string name="app_name">MobileSklad</string>
     <string name="main_radioButton_online">online</string>
     <string name="main_radioButton_offline">offline</string>
     <string name="main_radioButton_offline_online">offline + online</string>
     <string name="action_sign_in">start</string>
+    <string name="action_sign_out">exit</string>
+    <string name="prompt_user_name">e-mail</string>
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">password</string>
     <string name="activity_main_switch_autologin">autologin</string>
@@ -50,4 +52,14 @@
         <item>45</item>
     </integer-array>
     <string name="value">value</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="error_incorrect_email">This email is incorrect</string>
 </resources>

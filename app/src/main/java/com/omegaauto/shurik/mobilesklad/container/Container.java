@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2018.
+ * shurik
+ */
+
 package com.omegaauto.shurik.mobilesklad.container;
 
 import android.content.Context;
@@ -45,6 +50,7 @@ public class Container {
 
     public Container() {
 
+        setNoData();
 //        colorMaster = context.getResources().getColor(R.color.colorTextEnable);
 //        colorSlave = context.getResources().getColor(R.color.black);
 
@@ -72,7 +78,6 @@ public class Container {
         }catch (IllegalAccessException e3){
             return "";
         }
-
 
     }
 
@@ -166,7 +171,7 @@ public class Container {
     }
 
     public String getPartner_phone() {
-        return partner_phone;
+        return convertToNL(partner_phone, ',');
     }
 
     public void setPartner_phone(String partner_phone) {
@@ -207,6 +212,10 @@ public class Container {
 
     public String getNumber() {
         return number + " из " + containersTotal;
+    }
+
+    public String getNumberValue() {
+        return number;
     }
 
     public void setNumber(String number) {
@@ -253,31 +262,70 @@ public class Container {
         return outputString;
     }
 
+    private void setAllProperties(String value){
+        driver_name = value;
+        vehicle_name = value;
+
+        zayavkaTEP_highway_date = value;
+        zayavkaTEP_highway_number = value;
+        zayavkaTEP_number = value;
+        trip_number = value;
+        nn = value;
+        nnMax = value;
+        partner_address = value;
+        partner_name = value;
+        partner_phone = value;
+        invoice_numbers = value;
+        type_pack = value;
+        weight = value;
+        weightTotal = value;
+
+        amount_goods = value;
+        amount_goodsTotal = value;
+
+        number = value;
+        containersTotal = value;
+        volume = value;
+        volumeTotal = value;
+    }
+
     public void setNoData(){
-        driver_name = "нет данных";
-        vehicle_name = "нет данных";
+        setAllProperties("нет данных");
+    }
 
-        zayavkaTEP_highway_date = "нет данных";
-        zayavkaTEP_highway_number = "нет данных";
-        zayavkaTEP_number = "нет данных";
-        trip_number = "нет данных";
-        nn = "нет данных";
-        nnMax = "нет данных";
-        partner_address = "нет данных";
-        partner_name = "нет данных";
-        partner_phone = "нет данных";
-        invoice_numbers = "нет данных";
-        type_pack = "нет данных";
-        weight = "нет данных";
-        weightTotal = "нет данных";
+    public void setNoConnect(){
+        setAllProperties("нет связи");
+    }
 
-        amount_goods = "нет данных";
-        amount_goodsTotal = "нет данных";
+    public void setTimeout(){
+        setAllProperties("превышено ожидание");
+    }
 
-        number = "нет данных";
-        containersTotal = "нет данных";
-        volume = "нет данных";
-        volumeTotal = "нет данных";
+    public Container copy(){
+        Container containerCopy = new Container();
+        containerCopy.setAmount_goods(this.amount_goods);
+        containerCopy.setAmount_goodsTotal(this.amount_goodsTotal);
+        containerCopy.setContainersTotal(this.containersTotal);
+        containerCopy.setDriver_name(this.driver_name);
+        containerCopy.setInvoice_numbers(this.invoice_numbers);
+        containerCopy.setNn(this.nn);
+        containerCopy.setNnMax(this.nnMax);
+        containerCopy.setNumber(this.number);
+        containerCopy.setPartner_address(this.partner_address);
+        containerCopy.setPartner_name(this.partner_name);
+        containerCopy.setPartner_phone(this.partner_phone);
+        containerCopy.setTrip_number(this.trip_number);
+        containerCopy.setType_pack(this.type_pack);
+        containerCopy.setVehicle_name(this.vehicle_name);
+        containerCopy.setVolume(this.volume);
+        containerCopy.setVolumeTotal(this.volumeTotal);
+        containerCopy.setWeight(this.weight);
+        containerCopy.setWeightTotal(this.weightTotal);
+        containerCopy.setZayavkaTEP_highway_date(this.zayavkaTEP_highway_date);
+        containerCopy.setZayavkaTEP_highway_number(this.zayavkaTEP_highway_number);
+        containerCopy.setZayavkaTEP_number(this.zayavkaTEP_number);
+
+        return containerCopy;
     }
 
     @Override

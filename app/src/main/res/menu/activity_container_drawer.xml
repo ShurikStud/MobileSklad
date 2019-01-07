@@ -8,6 +8,7 @@
 
     <group android:checkableBehavior="none">
         <item
+            android:orderInCategory="0"
             android:id="@+id/nav_settings"
             android:icon="@mipmap/twotone_settings_black_24"
             android:title="@string/action_settings"/>
@@ -16,27 +17,36 @@
     </group>
 
     <group android:checkableBehavior="none">
-        <item android:title="@string/mode">
+        <item android:title="@string/mode"
+            android:orderInCategory="1"
+            android:enabled="false"
+            android:checkable="true"
+            >
             <menu>
 
                 <item
+                    android:orderInCategory="2"
                     android:id="@+id/nav_online"
                     android:title="@string/main_radioButton_online"
                     app:actionViewClass="android.support.v7.widget.SwitchCompat"
-                    android:enabled="false"
                     />
                 <item
+                    android:orderInCategory="2"
                     android:id="@+id/nav_offline"
                     android:title="@string/main_radioButton_offline"
                     app:actionViewClass="android.support.v7.widget.SwitchCompat"
-                    android:enabled="false"/>
-
+                   />
             </menu>
         </item>
     </group>
 
-    <group android:checkableBehavior="none">
-        <item android:title="@string/zayavkiTEP">
+    <group
+        android:id="@+id/container_drawer_group_zayavkaTEP"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/container_group_zayavkaTEP_item"
+            android:title="@string/zayavkiTEP"
+            android:orderInCategory="2">
             <menu>
 
             </menu>

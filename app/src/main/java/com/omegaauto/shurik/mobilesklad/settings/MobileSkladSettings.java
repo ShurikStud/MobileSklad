@@ -1,6 +1,12 @@
 package com.omegaauto.shurik.mobilesklad.settings;
 
+import com.omegaauto.shurik.mobilesklad.user.MobileSkladUser;
+import com.omegaauto.shurik.mobilesklad.utils.MySharedPref;
+import com.omegaauto.shurik.mobilesklad.zayavkaTEP.ZayavkaTEPList;
+
 public final class MobileSkladSettings {
+
+    private static final int PROPERTIES_VERSION = 4;
 
     private static MobileSkladSettings instance;
 
@@ -8,13 +14,19 @@ public final class MobileSkladSettings {
     private Boolean isCounterEnable = false;
     private MobileSkladFontSize fontSize;
     private int timeout = 0;
+    private MobileSkladUser currentUser;
 
-    private static final int PROPERTIES_VERSION = 1;
+    boolean authorized; // если истина - пользователь авторизирован, если ложь - не авторизирован.
+    boolean modeOnline = true; //
+    boolean modeOffline = false;
+
     int current_version;
 
     //================ МЕТОДЫ ==================
 
-    private MobileSkladSettings(){}
+    private MobileSkladSettings(){
+        currentUser = new MobileSkladUser();
+    }
 
     static public MobileSkladSettings getInstance(){
 
@@ -56,6 +68,10 @@ public final class MobileSkladSettings {
         counter = 0;
         timeout = 10;
         fontSize = ListFontSizes.getInstance().get("NORMAL");
+        currentUser.setDefault();
+        authorized = false;
+        modeOnline = true;
+        modeOffline = false;
         setCurrentVersion();
     }
 
@@ -88,9 +104,53 @@ public final class MobileSkladSettings {
         } else {
             setFontSize(ListFontSizes.getInstance().get(input.getFontSize().getId()));
         }
+        MobileSkladUser tempCurrentUser = input.getCurrentUser();
+        currentUser.setToken(tempCurrentUser.getToken());
+        currentUser.setPasswordHash(tempCurrentUser.getPasswordHash());
+        currentUser.setEmail(tempCurrentUser.getEmail());
+        currentUser.setName(tempCurrentUser.getName());
+
+        setAuthorized(input.isAuthorized());
+        setModeOnline(input.isModeOnline());
+        setModeOffline(input.isModeOffline());
     }
 
     private void setCurrentVersion(){
         current_version = PROPERTIES_VERSION;
+    }
+
+    public MobileSkladUser getCurrentUser() {
+        return currentUser;
+    }
+
+    public boolean isAuthorized() {
+        return authorized;
+    }
+
+    public void setAuthorized(boolean authorized) {
+        this.authorized = authorized;
+        if (!authorized){
+            setModeOnline(true);
+            setModeOffline(false);
+            currentUser.setDefault();
+            ZayavkaTEPList zayavkaTEPList = ZayavkaTEPList.getInstance();
+            zayavkaTEPList.clear();
+        }
+    }
+
+    public boolean isModeOnline() {
+        return modeOnline;
+    }
+
+    public void setModeOnline(boolean modeOnline) {
+        this.modeOnline = modeOnline;
+    }
+
+    public boolean isModeOffline() {
+        return modeOffline;
+    }
+
+    public void setModeOffline(boolean modeOffline) {
+        this.modeOffline = modeOffline;
     }
 }
