@@ -62,4 +62,7 @@
         completions."
     </string>
     <string name="error_incorrect_email">This email is incorrect</string>
+    <string name="offline_container_not_found">OFFLINE\nContainer not found</string>
+    <string name="error_zayavkaTEP_autorization">Для загрузки Заявки ТЭП необходимо авторизоваться.</string>
+    <string name="error_autorisation">"При попытке авторизации произошла ошибка"</string>
 </resources>

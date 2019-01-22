@@ -24,6 +24,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.text.method.Touch;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -115,6 +116,10 @@ public class ContainerActivity extends AppCompatActivity {
 
     ContainerPropertiesAdapter containerPropertiesAdapter;
 
+    ImageView imageNetwork;
+    ImageView imageNetworkOffline;
+    ImageView imageLogin;
+
     ImageView imageViewUser; // картинка аватара юзера
     TextView textViewUserName; // имя пользователя
     TextView textViewUserEmail; // почта пользователя (она же - логин)
@@ -126,6 +131,7 @@ public class ContainerActivity extends AppCompatActivity {
     long lastTimeBackPressed = 0;
 
     ProgressDialog zayavkaProgressDialog;
+    ProgressZayavkaTask progressZayavkaTask;
     Handler h;
 
 
@@ -145,6 +151,7 @@ public class ContainerActivity extends AppCompatActivity {
 
         // инициализация диалога загрузки данных по заявке ТЭП
         zayavkaProgressDialog = new ProgressDialog(context);
+        zayavkaProgressDialog.setOnCancelListener(new ContainerOnCanceled());
         // меняем стиль на индикатор
         zayavkaProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         zayavkaProgressDialog.setCanceledOnTouchOutside(false);
@@ -163,6 +170,10 @@ public class ContainerActivity extends AppCompatActivity {
         menu = navigationView.getMenu();
 
         //navigationView.setOnClickListener(containerOnClickListener);
+
+        imageNetwork = (ImageView) findViewById(R.id.activity_container_image_network);
+        imageNetworkOffline = (ImageView) findViewById(R.id.activity_container_image_network_off);
+        imageLogin = (ImageView) findViewById(R.id.activity_container_image_login);
 
         LinearLayout headerLayout = (LinearLayout) navigationView.getHeaderView(0);
 
@@ -272,13 +283,8 @@ public class ContainerActivity extends AppCompatActivity {
                 if (result.getContents() == null) {
                     Toast.makeText(this, R.string.scan_not_found, Toast.LENGTH_LONG).show();
                 } else {
-                    //Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                    //textBarCode.setText(result.getContents());
-
                     String barcode = result.getContents();
                     updateView(barcode);
-
-                   //startSearch(result.getContents(), true);
                 }
             }
 
@@ -303,8 +309,6 @@ public class ContainerActivity extends AppCompatActivity {
 
         finish();
         System.exit(0);
-
-        //super.onBackPressed();
     }
 
     @Override
@@ -339,13 +343,10 @@ public class ContainerActivity extends AppCompatActivity {
                 ZayavkaTEP zayavkaTEP = zayavkaTEPListAdapter.getZayavka(i);
 //                itemZayavkaTEP = menu.add(R.id.container_drawer_group_zayavkaTEP, Menu.NONE, 5, zayavkaTEP.getNumber());
                 itemZayavkaTEP = menu.add(R.id.container_drawer_group_zayavkaTEP, i, 5, zayavkaTEP.getNumber());
-                //itemZayavkaTEP.setCheckable(false);
                 itemZayavkaTEP.setIcon(R.mipmap.ic_close_circle_outline_red_36dp);
-                //itemZayavkaTEP.
                 TextView countView = new TextView(context);
                 itemZayavkaTEP.setActionView(countView);
                 itemZayavkaTEP.setOnMenuItemClickListener(containerOnMenuItemClickListener);
-                //itemZayavkaTEP.
                 countView.setText(Integer.toString(zayavkaTEP.getCountNumbers()));
                 countView.setGravity(Gravity.CENTER_VERTICAL);
                 countView.setTypeface(null, Typeface.BOLD);
@@ -355,25 +356,14 @@ public class ContainerActivity extends AppCompatActivity {
             menu.setGroupVisible(R.id.container_drawer_group_zayavkaTEP, false);
         }
 
-//        menu.clear();
-//        menu.removeItem();
-//
-//        for (int i = 0; i < zayavkaTEPListAdapter.getCount(); i++){
-//            ZayavkaTEP zayavkaTEP = zayavkaTEPListAdapter.getZayavka(i);
-//            menu.add(R.id.container_drawer_group_zayavkaTEP, Menu.NONE, 5, zayavkaTEP.getNumber());
-//        }
-
-
     }
 
     private void updateView(String barcode){
 
         if (barcode == null) {
-
             showContainer();
             showProgress(false);
             return;
-
         }
 
         if (! barcode.equals(lastBarcode)) {
@@ -392,6 +382,7 @@ public class ContainerActivity extends AppCompatActivity {
                 if (container == null){
                     resultOK = false;
                     container = new Container();
+                    container.setNoDataOffline();
                 } else {
                     resultOK = true;
                 }
@@ -404,13 +395,12 @@ public class ContainerActivity extends AppCompatActivity {
                 if (mobileSkladSettings.isModeOnline()){
                     // запуск фонового задания получить на сервере информацию о контейнере
                     new ProgressContainerTask().execute(barcode);
-
                     // запуск фонового задания получить на сервере информацию о всех контейнерах заявки ТЭП
-                    new ProgressZayavkaTask().execute("");
+                    progressZayavkaTask = new ProgressZayavkaTask();
+                    progressZayavkaTask.execute("");
                 } else {
                     // включен режим ТОЛЬКО оффлайн. раз не нашли - выведем сообщение.
-                    Toast toast = Toast.makeText(context, "OFFLINE \n" +
-                            "Контейнер не найден.", Toast.LENGTH_LONG );
+                    Toast toast = Toast.makeText(context, R.string.offline_container_not_found, Toast.LENGTH_LONG );
 //                    toast.setGravity(Gravity.CENTER, toast.getXOffset(), toast.getYOffset());
                     toast.show();
 
@@ -418,9 +408,8 @@ public class ContainerActivity extends AppCompatActivity {
                     showProgress(false);
                 }
             } else {
-
-
-
+                // если нашли в оффлайн - скроем бублик
+                showProgress(false);
             }
 
         } else {
@@ -432,8 +421,6 @@ public class ContainerActivity extends AppCompatActivity {
             showContainer();
 
         }
-
-
     }
 
     private void updateUserInfo(){
@@ -448,14 +435,27 @@ public class ContainerActivity extends AppCompatActivity {
         onlineSwitch.setEnabled(mobileSkladSettings.isAuthorized());
         offlineSwitch.setEnabled(mobileSkladSettings.isAuthorized());
 
-//        if (mobileSkladSettings.isAuthorized()){
         onlineSwitch.setChecked(mobileSkladSettings.isModeOnline());
         offlineSwitch.setChecked(mobileSkladSettings.isModeOffline());
 
-//        } else {
-//            onlineSwitch.setChecked(true);
-//            offlineSwitch.setChecked(false);
-//        }
+        if (mobileSkladSettings.isAuthorized()) {
+           imageLogin.setImageResource(R.mipmap.account_check_24);
+        } else {
+            imageLogin.setImageResource(R.mipmap.account_off_24);
+        }
+
+        if (mobileSkladSettings.isModeOnline()){
+            imageNetwork.setImageResource(R.mipmap.access_point_network_24);
+        } else {
+            imageNetwork.setImageResource(R.mipmap.access_point_network_24_disable);
+        }
+
+        if (mobileSkladSettings.isModeOffline()){
+            imageNetworkOffline.setImageResource(R.mipmap.access_point_network_off_24);
+        } else {
+            imageNetworkOffline.setImageResource(R.mipmap.access_point_network_off_24_disable);
+        }
+
     }
 
     private void showContainer(){
@@ -595,7 +595,7 @@ public class ContainerActivity extends AppCompatActivity {
                     }
                     showProgress(false);
                     if (!mobileSkladSettings.isAuthorized()){
-                        Toast.makeText(context, "Для загрузки Заявки ТЭП необходимо авторизоваться.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.error_zayavkaTEP_autorization, Toast.LENGTH_LONG).show();
                         updateUserInfo();
                     }
                     break;
@@ -688,6 +688,7 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private class ProgressZayavkaTask extends AsyncTask<String, Integer, Boolean> {
+        // класс, который загружает информацию по заявке ТЭП
 
         boolean overflowMaxZayavkaTEP = false;
         boolean overwriteZayavkaTEP = false;
@@ -794,6 +795,15 @@ public class ContainerActivity extends AppCompatActivity {
            return false;
         }
 
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onCancelled(Boolean aBoolean) {
+            super.onCancelled(aBoolean);
+        }
     }
 
     private class CounterTask extends AsyncTask<String, Integer, String >{
@@ -1054,6 +1064,17 @@ public class ContainerActivity extends AppCompatActivity {
             alertDialog.show();
 
             return false;
+        }
+    }
+
+    class ContainerOnCanceled implements Dialog.OnCancelListener{
+        @Override
+        public void onCancel(DialogInterface dialogInterface) {
+            Toast.makeText(context, "=========", Toast.LENGTH_SHORT).show();
+            if (progressZayavkaTask != null && progressZayavkaTask.getStatus() == AsyncTask.Status.RUNNING){
+                progressZayavkaTask.cancel(false);
+                //progressZayavkaTask.can
+            }
         }
     }
 }

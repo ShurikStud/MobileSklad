@@ -101,6 +101,8 @@ public class ParserHttpResponse {
                     container.setZayavkaTEP_highway_date(jsonObjectData.getString("zayavkaTEP_highway_date"));
                 if (jsonObjectData.has("zayavkaTEP_highway_number"))
                     container.setZayavkaTEP_highway_number(jsonObjectData.getString("zayavkaTEP_highway_number"));
+                if (jsonObjectData.has("RouteName"))
+                    container.setRoute_name(jsonObjectData.getString("RouteName"));
 
                 return container;
             } else {

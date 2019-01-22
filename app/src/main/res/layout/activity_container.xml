@@ -101,14 +101,50 @@
                         app:layout_constraintEnd_toStartOf="@id/activity_container_layout_camera"
                         app:layout_constraintStart_toEndOf="@id/activity_container_image_button_menu">
 
-                    <ImageButton
-                        android:id="@+id/activity_container_image_button_menu3"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_wifi_black_18dp"
-                        android:layout_gravity="center"
-                        android:background="@color/transparent"
-                        android:contentDescription="TODO" />
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/activity_container_image_login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/account_check_24"
+                            android:layout_gravity="center"
+                            android:background="@color/transparent"
+                            android:contentDescription="TODO" />
+
+                        <LinearLayout
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content">
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/activity_container_image_network"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/access_point_network_24"
+                            android:layout_gravity="center"
+                            android:background="@color/transparent"
+                            android:contentDescription="TODO" />
+
+                        <LinearLayout
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content">
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/activity_container_image_network_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/access_point_network_off_24"
+                            android:layout_gravity="center"
+                            android:background="@color/transparent"
+                            android:contentDescription="TODO" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/activity_container_textview_container_value"

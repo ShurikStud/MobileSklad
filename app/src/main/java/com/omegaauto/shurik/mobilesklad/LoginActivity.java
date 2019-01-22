@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button mEmailSignOutButton;
+    private Button mEmailSignInButton;
 
     private LoginOnClickListener loginOnClickListener;
 
@@ -97,10 +99,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginOnClickListener = new LoginOnClickListener();
 
-        Button mEmailSignOutButton = (Button) findViewById(R.id.email_sign_out_button);
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(loginOnClickListener);
+        mEmailSignOutButton = (Button) findViewById(R.id.email_sign_out_button);
         mEmailSignOutButton.setOnClickListener(loginOnClickListener);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(loginOnClickListener);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -169,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Авторизировать нового пользователя?");
             builder.setMessage("Внимание! Перед попыткой авторизоваться прошлая авторизация будет отменена. Все данные оффлайн будут очищены!");
-            builder.setIcon(R.mipmap.ic_close_circle_outline_red_48dp);
+            builder.setIcon(R.mipmap.ic_account_convert);
             builder.setCancelable(false);
 
             builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
@@ -379,7 +381,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
 
                 if (tokenError == null) {
-                    Toast.makeText(context, "При попытке авторизации произошла ошибка", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.error_autorisation, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -450,11 +452,16 @@ public class LoginActivity extends AppCompatActivity {
         if (mobileSkladSettings.isAuthorized()) {
             mEmailView.setText(currentUser.getEmail());
             mUserName.setText(currentUser.getName());
+            mUserName.setVisibility(View.VISIBLE);
+            mEmailSignOutButton.setVisibility(View.VISIBLE);
         } else {
             mEmailView.setText("");
             mUserName.setText("");
+            mUserName.setVisibility(View.GONE);
+            mEmailSignOutButton.setVisibility(View.GONE);
         }
         mPasswordView.setText("");
+        mPasswordView.requestFocus();
     }
 
     class LoginOnClickListener implements OnClickListener {

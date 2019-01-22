@@ -84,6 +84,7 @@
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
+                android:drawableLeft="@mipmap/ic_account_plus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -93,6 +94,7 @@
             <Button
                 android:id="@+id/email_sign_out_button"
                 style="?android:textAppearanceSmall"
+                android:drawableLeft="@mipmap/ic_account_minus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

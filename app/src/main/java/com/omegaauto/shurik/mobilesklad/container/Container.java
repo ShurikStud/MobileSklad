@@ -5,18 +5,8 @@
 
 package com.omegaauto.shurik.mobilesklad.container;
 
-import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-
-import com.omegaauto.shurik.mobilesklad.R;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.util.Date;
 
 public class Container {
 
@@ -26,6 +16,7 @@ public class Container {
     String zayavkaTEP_highway_date; // (Дата Заявки ТЭП магистральной)
     String zayavkaTEP_highway_number; // (№ Заявки ТЭП магистральной)
     String zayavkaTEP_number; // (№ Заявки ТЭП подчиненной)
+    String route_name; // Наименование маршрута
     String trip_number = ""; // (№ рейса)
     String nn; // (№ по порядку в карте погрузки)
     String nnMax; // (№ по порядку в карте погрузки)
@@ -123,6 +114,14 @@ public class Container {
 
     public void setZayavkaTEP_number(String zayavkaTEP_number) {
         this.zayavkaTEP_number = zayavkaTEP_number;
+    }
+
+    public String getRoute_name() {
+        return route_name;
+    }
+
+    public void setRoute_name(String route_name) {
+        this.route_name = route_name;
     }
 
     public String getTrip_number() {
@@ -269,6 +268,7 @@ public class Container {
         zayavkaTEP_highway_date = value;
         zayavkaTEP_highway_number = value;
         zayavkaTEP_number = value;
+        route_name = value;
         trip_number = value;
         nn = value;
         nnMax = value;
@@ -291,6 +291,10 @@ public class Container {
 
     public void setNoData(){
         setAllProperties("нет данных");
+    }
+
+    public void setNoDataOffline(){
+        setAllProperties("OFFLINE: нет данных");
     }
 
     public void setNoConnect(){
