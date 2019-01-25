@@ -12,9 +12,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
-import android.print.PrintAttributes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -24,7 +22,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
-import android.text.method.Touch;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -76,7 +73,7 @@ public class ContainerActivity extends AppCompatActivity {
 
     String lastBarcode = "";
     String scanBarcode = "";
-    Boolean isCounterEnable = false;
+    Boolean isCameraScanComplete = false; // флаг взвоится после удачного сканирования при помощи камеры
     Context context;
     ListView listView;
     ProgressBar progressBarHTTPService;
@@ -132,6 +129,7 @@ public class ContainerActivity extends AppCompatActivity {
 
     ProgressDialog zayavkaProgressDialog;
     ProgressZayavkaTask progressZayavkaTask;
+    CounterTask counterTask;
     Handler h;
 
 
@@ -271,6 +269,7 @@ public class ContainerActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        isCameraScanComplete = false;
         if (requestCode == REQUEST_CONTAINER_NUMBER) {
             if (resultCode == REQUEST_RESULT_OK) {
                 String barcode = data.getStringExtra("Barcode");
@@ -282,8 +281,10 @@ public class ContainerActivity extends AppCompatActivity {
             if (result != null) {
                 if (result.getContents() == null) {
                     Toast.makeText(this, R.string.scan_not_found, Toast.LENGTH_LONG).show();
+                    isCameraScanComplete = false;
                 } else {
                     String barcode = result.getContents();
+                    isCameraScanComplete = true;
                     updateView(barcode);
                 }
             }
@@ -466,10 +467,24 @@ public class ContainerActivity extends AppCompatActivity {
 
         //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        if (isCounterEnable && mobileSkladSettings.getCounterEnable()) {
-            new CounterTask().execute("");
+        if (isCameraScanComplete && mobileSkladSettings.getCounterEnable()) {
+            startAutoScan();
         }
 
+    }
+
+    private void startAutoScan(){
+
+        counterTask = new CounterTask();
+        counterTask.execute("");
+        isCameraScanComplete = false;
+    }
+
+    private void stopAutoScan(){
+        if (counterTask != null && counterTask.getStatus()==AsyncTask.Status.RUNNING){
+            counterTask.cancel(true);
+        }
+        textViewCounter.setText("");
     }
 
     private void setHeaderContainer(){
@@ -837,10 +852,8 @@ public class ContainerActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            finish();
-            //Toast.makeText(context, "finish", Toast.LENGTH_SHORT).show();
-
+            textViewCounter.setText("");
+            startScan();
         }
     }
 
@@ -948,12 +961,10 @@ public class ContainerActivity extends AppCompatActivity {
     class ContainerOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-
             Intent intentLogin;
-
             switch (view.getId()){
-
                 case R.id.activity_container_textview_container_value:
+                    stopAutoScan();
                     startActivityForResult(new Intent(context, NumberContainerActivity.class), REQUEST_CONTAINER_NUMBER);
                     break;
                 case R.id.imageViewUser:
@@ -970,12 +981,11 @@ public class ContainerActivity extends AppCompatActivity {
                     break;
                 case R.id.activity_container_image_button_menu:
 //                    drawer.openDrawer(0);
+                    stopAutoScan();
                     drawer.openDrawer(Gravity.LEFT);
                     break;
                 default:
-
                     break;
-
             }
         }
     }
@@ -984,6 +994,7 @@ public class ContainerActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (view.getId() == R.id.activity_container_layout_camera && motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                stopAutoScan();
                 startScan();
                 return false;
             }
