@@ -7,7 +7,7 @@ public final class ContainerPropertiesSettings {
     // класс настроек порядка и видимости реквизитов КОНТЕЙНЕРа (Container)
     // Элемент в позиции 0 содержит последний номер контейнера, который искали.
 
-    private static final int PROPERTIES_VERSION = 9;
+    private static final int PROPERTIES_VERSION = 11;
     int current_version;
 
     private List<Property> properties; // все возможные свойства контейнера
@@ -63,6 +63,7 @@ public final class ContainerPropertiesSettings {
         properties.add(new Property("ZayavkaTEP_highway_date", "дата Заявки ТЭП (магистральной)", null));
         properties.add(new Property("ZayavkaTEP_highway_number", "№ Заявки ТЭП (магистральной)", null));
         properties.add(new Property("ZayavkaTEP_number", "№ Заявки ТЭП", null));
+        properties.add(new Property("Route_name", "Маршрут", null));
         properties.add(new Property("Trip_number", "№ рейса", null));
         properties.add(new Property("Nn", "№ п/п", "/"));
         properties.add(new Property("SEPARATOR", "НЕ ОТОБРАЖАЮТСЯ", null));
@@ -76,7 +77,7 @@ public final class ContainerPropertiesSettings {
         properties.add(new Property("Number", "№ тарного места", "из"));
         properties.add(new Property("Volume", "Объем тарного места, л.", "/"));
         //separator = properties.size();
-        separator = 7;
+        separator = 8;
         setCurrentVersion();
     }
 

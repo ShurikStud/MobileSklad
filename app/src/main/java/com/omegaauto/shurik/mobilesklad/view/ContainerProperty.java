@@ -32,6 +32,15 @@ public class ContainerProperty {
         return value;
     }
 
+    // возвращает значение до разделителя
+    public String getValueString(){
+        if (spanDelimiter == null){
+            return value.toString().trim();
+        } else {
+            return value.toString().substring(0, value.toString().indexOf(spanDelimiter)).trim();
+        }
+    }
+
     public void setValue(String value) {
         this.value.clear();
         this.value.append(value);

@@ -59,12 +59,22 @@ public class NumberListLast {
     }
 
     public void setCurrentNumber(String currentNumber) {
-        if (!this.currentNumber.isEmpty()){
+
+        if (!currentNumber.isEmpty()){
+            this.currentNumber = currentNumber;
             addNumber(this.currentNumber);
         }
         if (numberList.size() > COUNT_NUMBERS){
             numberList.remove(COUNT_NUMBERS);
         }
-        this.currentNumber = currentNumber;
+
+
+        /*if (!this.currentNumber.isEmpty()){
+            addNumber(this.currentNumber);
+        }
+        if (numberList.size() > COUNT_NUMBERS){
+            numberList.remove(COUNT_NUMBERS);
+        }
+        this.currentNumber = currentNumber;*/
     }
 }

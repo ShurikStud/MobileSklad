@@ -30,7 +30,7 @@ public class SettingsAdapter extends BaseAdapter {
     private ContainerPropertiesSettings containerPropertiesSettings;
     private MobileSkladSettings mobileSkladSettings;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SettingsAdapter(Context context){
         this.context = context;
         containerPropertiesSettings = ContainerPropertiesSettings.getInstance();

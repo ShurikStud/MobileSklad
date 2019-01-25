@@ -59,6 +59,15 @@
         <item name="android:textColor">@color/colorTextEnable</item>
         <item name="android:textColorPrimaryDisableOnly">@color/colorTextDisable</item>
         <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleCounterValue">
+        <item name="android:textColor">@color/colorTextCounter</item>
+        <item name="android:textColorPrimaryDisableOnly">@color/colorTextDisable</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="TextStyleContainerValue">
@@ -89,7 +98,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ActivityNumberStyle" parent="Base.V7.Widget.AppCompat.EditText">
+    <style name="ActivityNumberStyle" parent="Theme.AppCompat">
         <item name="android:background">@drawable/shape_number_container</item>
     </style>
 
@@ -111,6 +120,13 @@
         <item name="android:background">@drawable/shape_button</item>
         <item name="android:textColor">@color/colorTextEnable</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PhotoButtonStyle" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/shape_photo_button</item>
+        <item name="android:textColor">@color/colorTextEnable</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">4dp</item>
     </style>
 
     <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">

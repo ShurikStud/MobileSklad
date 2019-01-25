@@ -75,6 +75,7 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
 
             viewHolder.textValue = (TextView) row.findViewById(R.id.activity_container_item_text_value);
             viewHolder.textName = (TextView) row.findViewById(R.id.activity_container_item_text_name);
+            viewHolder.value = containerProperty.getValueString();
 
             row.setTag(viewHolder);
 
@@ -87,6 +88,7 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
 
         viewHolder.textValue.setText(containerProperty.getValue());
         viewHolder.textName.setText(containerProperty.getName());
+        viewHolder.value = containerProperty.getValueString();
 
         viewHolder.textValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, MobileSkladSettings.getInstance().getFontSize().getSizeValue());
         viewHolder.textName.setTextSize(TypedValue.COMPLEX_UNIT_SP, MobileSkladSettings.getInstance().getFontSize().getSizeName());
@@ -97,6 +99,7 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
     class ViewHolder{
         TextView textValue;
         TextView textName;
+        String value;
     }
 
     class PropertyOnLongClickListener implements View.OnLongClickListener{
@@ -104,7 +107,8 @@ public class ContainerPropertiesAdapter extends BaseAdapter {
         public boolean onLongClick(View view) {
             ViewHolder viewHolder = (ViewHolder) view.getTag();
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("", viewHolder.textValue.getText());
+//            ClipData clip = ClipData.newPlainText("", viewHolder.textValue.getText());
+            ClipData clip = ClipData.newPlainText("", viewHolder.value);
             clipboard.setPrimaryClip(clip);
 
             String textMessage = context.getResources().getString(R.string.value) + "\n" + viewHolder.textName.getText() + "\n" + context.getResources().getString(R.string.copied);

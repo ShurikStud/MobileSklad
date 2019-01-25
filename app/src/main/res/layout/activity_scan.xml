@@ -64,7 +64,7 @@
             android:id="@+id/activity_scan_edit_text_barcode_last"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintStart_toEndOf="@id/imageViewUser"
             app:layout_constraintEnd_toStartOf="@id/activity_scan_button_search"
             app:layout_constraintTop_toBottomOf="@+id/activity_scan_button_search"
             android:inputType="text"
@@ -75,7 +75,7 @@
             android:focusable="false"
             android:clickable="true"/>
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:inputType="textCapCharacters"
             app:layout_constraintEnd_toStartOf="@id/activity_scan_button_search"
-            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintStart_toEndOf="@id/imageViewUser"
             app:layout_constraintVertical_weight="1"
             style="@style/TextStyleContainerName"
             />
