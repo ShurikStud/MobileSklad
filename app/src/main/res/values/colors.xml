@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+=======
     <color name="transparent">#00000000</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
@@ -27,4 +32,5 @@
     <color name="black_overlay">#66000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+>>>>>>> release/версия_2.1
 </resources>

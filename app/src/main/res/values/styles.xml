@@ -1,4 +1,6 @@
 <resources>
+<<<<<<< HEAD
+=======
     <style name="Theme.AppCompat.Transparent" parent="Theme.AppCompat.NoActionBar">
         <item name="android:background">#33000000</item> <!-- Or any transparency or color you need -->
         <item name="android:windowNoTitle">true</item>
@@ -7,10 +9,24 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
+>>>>>>> release/версия_2.1
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+<<<<<<< HEAD
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+=======
 <!--        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>-->
@@ -40,12 +56,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:shadowColor">@color/transparent</item>
     </style>
+>>>>>>> release/версия_2.1
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:layout_width">match_parent</item>
+<<<<<<< HEAD
+        <item name="android:background">?attr/colorPrimary</item>
+=======
         <item name="android:textColor">@color/colorTextEnable</item>
         <item name="android:background">@drawable/shape_row_invisible</item>
     </style>
@@ -165,6 +185,7 @@
         <item name="android:shadowColor">@color/transparent</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size</item>
+>>>>>>> release/версия_2.1
 
     </style>
 

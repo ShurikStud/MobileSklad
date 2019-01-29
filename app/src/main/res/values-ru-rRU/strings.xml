@@ -4,7 +4,11 @@
     <string name="main_radioButton_online">онлайн</string>
     <string name="main_radioButton_offline">оффлайн</string>
     <string name="main_radioButton_offline_online">оффлайн + онлайн</string>
+<<<<<<< HEAD
+    <string name="action_sign_in">старт</string>
+=======
     <string name="action_sign_in">авторизация</string>
+>>>>>>> release/версия_2.1
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">пароль</string>
     <string name="activity_main_switch_autologin">автоматическая регистрация</string>
@@ -12,6 +16,8 @@
     <string name="activity_main_switch_autologin_hint">автоматическая регистрация</string>
     <string name="action_scan">сканировать</string>
     <string name="action_search">поиск</string>
+<<<<<<< HEAD
+=======
     <string name="activity_scan_desc">сканировать ШК</string>
     <string name="activity_settings_desc">настройки видимости</string>
     <string name="activity_login_desc">авторизация</string>
@@ -45,4 +51,5 @@
     <string name="offline_container_not_found">OFFLINE\\nКонтейнер не найден</string>
     <string name="error_zayavkaTEP_autorization">Для загрузки Заявки ТЭП необходимо авторизоваться.</string>
     <string name="error_autorisation">При попытке авторизации произошла ошибка</string>
+>>>>>>> release/версия_2.1
 </resources>

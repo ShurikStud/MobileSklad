@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView_mainActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+=======
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +23,7 @@
 
     android:background="@color/colorBackgroundLayout"
     android:fillViewport="true"
+>>>>>>> release/версия_2.1
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -53,10 +69,17 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
+<<<<<<< HEAD
+            app:layout_constraintTop_toBottomOf="@id/activity_main_linear_layout_top"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_linear_layout_bottom">
+
+             <RadioGroup
+=======
             app:layout_constraintBottom_toTopOf="@+id/activity_main_linear_layout_bottom"
             app:layout_constraintTop_toBottomOf="@id/activity_main_linear_layout_top">
 
             <RadioGroup
+>>>>>>> release/версия_2.1
                 android:id="@+id/activity_main_radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,14 +90,20 @@
 
                 <RadioButton
                     android:id="@+id/radioButton_online"
+<<<<<<< HEAD
+=======
                     style="@style/TextStyleContainerName"
+>>>>>>> release/версия_2.1
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+<<<<<<< HEAD
+=======
                     android:focusedByDefault="true"
+>>>>>>> release/версия_2.1
                     android:text="@string/main_radioButton_online"
                     android:textSize="@dimen/text_size" />
 
@@ -82,6 +111,14 @@
                     android:id="@+id/radioButton_offline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
+                    android:layout_weight="1"
+                    android:layout_margin="6dp"
+                    android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+                    android:button="@null"
+                    android:textSize="@dimen/text_size"
+                    android:text="@string/main_radioButton_offline" />
+=======
                     android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:button="@null"
@@ -89,11 +126,23 @@
                     android:enabled="false"
                     android:text="@string/main_radioButton_offline"
                     android:textSize="@dimen/text_size" />
+>>>>>>> release/версия_2.1
 
                 <RadioButton
                     android:id="@+id/radioButton_offline_online"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
+                    android:layout_weight="1"
+                    android:layout_margin="6dp"
+                    android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+                    android:button="@null"
+                    android:textSize="@dimen/text_size"
+                    android:text="@string/main_radioButton_offline_online" />
+            </RadioGroup>
+
+             <!-- Login progress -->
+=======
                     android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:button="@null"
@@ -104,6 +153,7 @@
             </RadioGroup>
 
             <!-- Login progress -->
+>>>>>>> release/версия_2.1
             <ProgressBar
                 android:id="@+id/login_progress"
                 style="?android:attr/progressBarStyleLarge"
@@ -126,8 +176,11 @@
                         android:id="@+id/login_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
                         android:enabled="false"
                         android:focusable="false"
+>>>>>>> release/версия_2.1
                         android:hint="@string/prompt_email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
@@ -143,8 +196,11 @@
                         android:id="@+id/login_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
                         android:enabled="false"
                         android:focusable="false"
+>>>>>>> release/версия_2.1
                         android:hint="@string/prompt_password"
                         android:inputType="textPassword"
                         android:maxLines="1"
@@ -162,11 +218,53 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/activity_main_switch_autologin_hint"
                         android:text="@string/activity_main_switch_autologin"
+<<<<<<< HEAD
+                        android:textSize="@dimen/text_size"/>
+=======
                         android:textSize="@dimen/text_size" />
+>>>>>>> release/версия_2.1
 
                 </android.support.design.widget.TextInputLayout>
 
 
+<<<<<<< HEAD
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main_linear_layout_bottom"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/email_sign_in_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/action_sign_in"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
+=======
             </LinearLayout>
 
         </LinearLayout>
@@ -204,3 +302,4 @@
     </android.support.constraint.ConstraintLayout>
 
 </ScrollView>
+>>>>>>> release/версия_2.1

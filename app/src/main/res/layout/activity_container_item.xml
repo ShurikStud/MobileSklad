@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/activity_container_item_text_value"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="value"
+        android:textSize="@dimen/text_size"
+=======
 <android.support.constraint.ConstraintLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,10 +27,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="value"
+>>>>>>> release/версия_2.1
         app:layout_constraintBottom_toTopOf="@id/activity_container_item_text_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+<<<<<<< HEAD
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_container_item_text_name"
+        android:textSize="@dimen/text_size_hint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_container_item_text_value"
+        android:hint="name"
+        />
+=======
         android:id="@+id/activity_container_item_text_name"
         style="@style/TextStyleContainerDescr"
         android:layout_width="match_parent"
@@ -25,5 +49,6 @@
         android:hint="name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_container_item_text_value" />
+>>>>>>> release/версия_2.1
 
 </android.support.constraint.ConstraintLayout>

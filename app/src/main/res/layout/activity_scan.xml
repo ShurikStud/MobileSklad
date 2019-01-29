@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+<<<<<<< HEAD
+    tools:context=".ScanActivity">
+=======
     tools:context=".ScanActivity"
     android:background="@color/colorBackgroundLayout"
     android:padding="10dp">
+>>>>>>> release/версия_2.1
 
     <FrameLayout
         android:id="@+id/cameraPreview"
@@ -16,6 +20,9 @@
         android:layout_weight="1"
         />
 
+<<<<<<< HEAD
+    <android.support.constraint.ConstraintLayout
+=======
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -51,12 +58,36 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/activity_scan_constrain_layout_barcode"
+>>>>>>> release/версия_2.1
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
+<<<<<<< HEAD
+        app:layout_constraintBottom_toTopOf="@+id/activity_scan_button_scan"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+
+            android:contentDescription="@string/action_scan"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_scan_button_search"
+
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/activity_scan_button_search"
+
+            app:srcCompat="@mipmap/baseline_photo_camera_black_36" />
+=======
         app:layout_constraintBottom_toBottomOf="@+id/activity_scan_button_scan"
         app:layout_constraintTop_toTopOf="@+id/constraintLayoutTop">
 
@@ -87,11 +118,47 @@
             app:srcCompat="@mipmap/baseline_border_horizontal_black_48"
             app:layout_constraintVertical_weight="1"
             />
+>>>>>>> release/версия_2.1
 
         <EditText
             android:id="@+id/activity_scan_edit_text_barcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toStartOf="@id/activity_scan_button_search"
+            android:inputType="textCapCharacters" />
+
+        <Button
+            android:id="@+id/activity_scan_button_search"
+            style="@android:style/Widget.Button.Inset"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_scan"
+            android:drawableLeft="@mipmap/baseline_search_black_36"
+            android:drawableStart="@mipmap/baseline_search_black_36"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/action_search"
+            android:textSize="@dimen/text_size"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <include layout="@layout/app_bar_scan" />
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="left"
+        app:layout_constraintBottom_toTopOf="@+id/activity_scan_button_scan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+=======
             android:inputType="textCapCharacters"
             app:layout_constraintEnd_toStartOf="@id/activity_scan_button_search"
             app:layout_constraintStart_toEndOf="@id/imageViewUser"
@@ -111,12 +178,25 @@
             style="@style/ButtonStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_weight="1"/>
+>>>>>>> release/версия_2.1
 
     </android.support.constraint.ConstraintLayout>
 
 
     <Button
         android:id="@+id/activity_scan_button_scan"
+<<<<<<< HEAD
+
+        style="@android:style/Widget.Button.Inset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/twotone_photo_camera_black_48"
+        android:drawableStart="@mipmap/twotone_photo_camera_black_48"
+        android:padding="40dp"
+        android:text="@string/action_scan"
+        android:textSize="@dimen/text_size_large"
+        app:layout_constraintBottom_toBottomOf="parent" />
+=======
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ButtonStyleLarge"
@@ -128,5 +208,6 @@
 
         android:layout_marginTop="20dp"
         />
+>>>>>>> release/версия_2.1
 
 </android.support.constraint.ConstraintLayout>

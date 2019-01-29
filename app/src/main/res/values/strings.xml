@@ -4,8 +4,11 @@
     <string name="main_radioButton_offline">offline</string>
     <string name="main_radioButton_offline_online">offline + online</string>
     <string name="action_sign_in">start</string>
+<<<<<<< HEAD
+=======
     <string name="action_sign_out">exit</string>
     <string name="prompt_user_name">user name</string>
+>>>>>>> release/версия_2.1
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">password</string>
     <string name="activity_main_switch_autologin">autologin</string>
@@ -13,6 +16,8 @@
     <string name="action_settings">settings</string>
     <string name="action_scan">scan</string>
     <string name="action_search">search</string>
+<<<<<<< HEAD
+=======
     <string name="activity_scan_desc">scan barcode</string>
     <string name="activity_settings_desc">visibility settings</string>
     <string name="activity_login_desc">authorization</string>
@@ -65,4 +70,5 @@
     <string name="offline_container_not_found">OFFLINE\nContainer not found</string>
     <string name="error_zayavkaTEP_autorization">Для загрузки Заявки ТЭП необходимо авторизоваться.</string>
     <string name="error_autorisation">"При попытке авторизации произошла ошибка"</string>
+>>>>>>> release/версия_2.1
 </resources>
