@@ -1,14 +1,21 @@
 package com.omegaauto.shurik.mobilesklad.container;
 
+import com.omegaauto.shurik.mobilesklad.ObservablesContainerPropertiesSettings;
+import com.omegaauto.shurik.mobilesklad.OnSettingsContainerRedoListener;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+//public final class ContainerPropertiesSettings implements ObservablesContainerPropertiesSettings {
 public final class ContainerPropertiesSettings {
     // класс настроек порядка и видимости реквизитов КОНТЕЙНЕРа (Container)
     // Элемент в позиции 0 содержит последний номер контейнера, который искали.
 
     private static final int PROPERTIES_VERSION = 11;
     int current_version;
+
+    //private List<OnSettingsContainerRedoListener> observers; // слушатели
 
     private List<Property> properties; // все возможные свойства контейнера
     private int separator; // номер в списке, меньше которго - видимые свойства, больше или равно - невидимые
@@ -24,6 +31,7 @@ public final class ContainerPropertiesSettings {
         if (instance == null){
             instance = new ContainerPropertiesSettings();
             instance.setCurrentVersion();
+            //instance.observers = new LinkedList<>();
         }
 
         return instance;
@@ -161,4 +169,20 @@ public final class ContainerPropertiesSettings {
     private void setCurrentVersion(){
         current_version = PROPERTIES_VERSION;
     }
+
+ /*   @Override
+    public void setOnSettingsContainerRedoListener(OnSettingsContainerRedoListener observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(OnSettingsContainerRedoListener observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (OnSettingsContainerRedoListener observer : observers)
+            observer.onSettingsContainerRedo();
+    }*/
 }

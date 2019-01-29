@@ -106,6 +106,7 @@ public class SettingsAdditionalFragment extends Fragment {
         ContainerPropertiesSettings containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
         containerPropertiesSettings.initDefault();
         MySharedPref.saveSettings(getContext());
+        //containerPropertiesSettings.notifyObservers(); // оповещение подписчиков об изменении настроек
     }
 
     private void updateSettingsView(){

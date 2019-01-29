@@ -74,6 +74,7 @@ public class ContainerActivity extends AppCompatActivity {
     String lastBarcode = "";
     String scanBarcode = "";
     Boolean isCameraScanComplete = false; // флаг взвоится после удачного сканирования при помощи камеры
+    Boolean isMenuDraw;
     Context context;
     ListView listView;
     ProgressBar progressBarHTTPService;
@@ -110,7 +111,9 @@ public class ContainerActivity extends AppCompatActivity {
     ContainerOnTouchListener containerOnTouchListener;
     ContainerOnCheckedChangeListener containerOnCheckedChangeListener;
     ContainerOnMenuItemClickListener containerOnMenuItemClickListener;
+    ContainerOnSettingsContainerRedoListener containerOnSettingsContainerRedoListener;
 
+    ContainerPropertiesSettings containerPropertiesSettings;
     ContainerPropertiesAdapter containerPropertiesAdapter;
 
     ImageView imageNetwork;
@@ -140,12 +143,16 @@ public class ContainerActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_container);
 
+        isMenuDraw = false;
+        containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
+
         controllerContainers = new ControllerContainers();
         containerOnKeyListener = new ContainerOnKeyListener();
         containerOnClickListener = new ContainerOnClickListener();
         containerOnTouchListener = new ContainerOnTouchListener();
         containerOnCheckedChangeListener = new ContainerOnCheckedChangeListener();
         containerOnMenuItemClickListener = new ContainerOnMenuItemClickListener();
+        containerOnSettingsContainerRedoListener = new ContainerOnSettingsContainerRedoListener();
 
         // инициализация диалога загрузки данных по заявке ТЭП
         zayavkaProgressDialog = new ProgressDialog(context);
@@ -224,6 +231,7 @@ public class ContainerActivity extends AppCompatActivity {
         textViewContainer.setOnClickListener(containerOnClickListener);
         imageButtonMenu.setOnClickListener(containerOnClickListener);
         linearLayoutCamera.setOnTouchListener(containerOnTouchListener);
+        //containerPropertiesSettings.setOnSettingsContainerRedoListener(containerOnSettingsContainerRedoListener);
 
         lastBarcode = MySharedPref.loadBarcode(context);
         container = MySharedPref.loadContainer(context);
@@ -252,9 +260,15 @@ public class ContainerActivity extends AppCompatActivity {
         updateMenu();
 
         // блок необходим для перерисовки экрана при изменении настроек
+        if (isMenuDraw){
+            isMenuDraw = false;
+            showContainer();
+        }
+/*
         if (containerPropertiesAdapter != null){
             showContainer();
         }
+*/
 
     }
 
@@ -360,25 +374,27 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void updateView(String barcode){
+        // вызывается при получении ШК (ввод вручную / выбор из истории / сканирование сканером / сканирование камерой)
+        // далее необходимо отправить запрос на сервер и получить по нему информацию
 
         if (barcode == null) {
             showContainer();
-            showProgress(false);
+            //showProgress(false);
             return;
         }
 
-        if (! barcode.equals(lastBarcode)) {
+        showProgress(true);
+        NumberListLast.getInstance().setCurrentNumber(barcode);
+        //if (! barcode.equals(lastBarcode)) {
 
             boolean resultOK = false;
-
-            showProgress(true);
 
             lastBarcode = barcode.toString();
             setHeaderContainer();
 
             if (mobileSkladSettings.isModeOffline()){
                 container = zayavkaTEPListAdapter.findContainer(barcode);
-                NumberListLast.getInstance().setCurrentNumber(barcode);
+//                NumberListLast.getInstance().setCurrentNumber(barcode);
 
                 if (container == null){
                     resultOK = false;
@@ -388,7 +404,7 @@ public class ContainerActivity extends AppCompatActivity {
                     resultOK = true;
                 }
 
-                showContainer();
+                //showContainer();
             }
 
             if (!resultOK) {
@@ -405,23 +421,24 @@ public class ContainerActivity extends AppCompatActivity {
 //                    toast.setGravity(Gravity.CENTER, toast.getXOffset(), toast.getYOffset());
                     toast.show();
 
-                    // в режиме только offline необходимо скрыть бублик
-                    showProgress(false);
+                    // в режиме только offline необходимо отобразить информацию по контейнеру
+                    showContainer();
+                    //showProgress(false);
                 }
             } else {
-                // если нашли в оффлайн - скроем бублик
-                showProgress(false);
+                // если нашли в оффлайн - отобразим информацию по контейнеру
+                showContainer();
+                //showProgress(false);
             }
 
-        } else {
+            //showContainer();
 
-            NumberListLast.getInstance().setCurrentNumber(barcode);
 
-            setHeaderContainer();
-            showProgress(false);
-            showContainer();
-
-        }
+//        } else {
+//            NumberListLast.getInstance().setCurrentNumber(barcode);
+//            setHeaderContainer();
+//            showContainer();
+//        }
     }
 
     private void updateUserInfo(){
@@ -461,11 +478,13 @@ public class ContainerActivity extends AppCompatActivity {
 
     private void showContainer(){
 
-        ContainerPropertiesSettings containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
+        //containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
         containerPropertiesAdapter = new ContainerPropertiesAdapter(context, container, containerPropertiesSettings);
         listView.setAdapter(new ContainerPropertiesAdapter(context, container, containerPropertiesSettings));
 
         //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        showProgress(false);
 
         if (isCameraScanComplete && mobileSkladSettings.getCounterEnable()) {
             startAutoScan();
@@ -488,6 +507,7 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void setHeaderContainer(){
+        // обновление заголовка контейнера (отображение ШК)
         textViewContainer.setText(lastBarcode);
     }
 
@@ -597,25 +617,30 @@ public class ContainerActivity extends AppCompatActivity {
                     NumberListLast.getInstance().setCurrentNumber(barcode);
 
                     showContainer();
-                    showProgress(false);
+                    //showProgress(false);
 
                     break;
 
                 case ZAYAVKA:
-                    if ( (zayavkaTEP != null) && (zayavkaTEP.getZayavkaTEP_header().count != 0) ) {
-                        showProgressContainers(true, 0, zayavkaTEP.getNumber());
-                    } else {
-                        // здесь сообщение об ошибке
-                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-                    }
+                    // скроем бублик и отобразим прогресс загрузки ЗаявкиТЭП
                     showProgress(false);
                     if (!mobileSkladSettings.isAuthorized()){
+                        // если не авторизован - сообщение и больше ничего не делаем
                         Toast.makeText(context, R.string.error_zayavkaTEP_autorization, Toast.LENGTH_LONG).show();
                         updateUserInfo();
+                    } else {
+                        if ((zayavkaTEP != null) && (zayavkaTEP.getZayavkaTEP_header().count != 0)) {
+                            showProgressContainers(true, 0, zayavkaTEP.getNumber());
+                        } else {
+                            // здесь сообщение об ошибке
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+                        }
                     }
                     break;
 
                 case ERROR:
+                    container.setError(errorMessage);
+                    showContainer();
                     Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                     lastBarcode = "";
                     break;
@@ -623,7 +648,6 @@ public class ContainerActivity extends AppCompatActivity {
                 case ERROR_CONNECTION:
                     container.setNoConnect();
                     showContainer();
-                    showProgress(false);
                     Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                     break;
 
@@ -631,15 +655,11 @@ public class ContainerActivity extends AppCompatActivity {
                     errorMessage = "Превышено время ожидания (задается в настройках)";
                     container.setTimeout();
                     showContainer();
-                    showProgress(false);
                     Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-//                    lastBarcode = "";
                     break;
-
                 default:
                     break;
             }
-
         }
 
         private EnumBarcodeType getResponse(String barcode) throws IOException{
@@ -747,6 +767,9 @@ public class ContainerActivity extends AppCompatActivity {
                 int count = 0;
                 Container containerZayavkaTEP;
                 for (String barcode : zayavkaTEP.getZayavkaTEP_header().numbers){
+                    if (isCancelled()){
+                        break;
+                    }
                     try {
 
                         if (logisticHttpService.getInfoFromServer(barcode)) {
@@ -943,12 +966,11 @@ public class ContainerActivity extends AppCompatActivity {
                         //lastBarcode = editTextContainer.getText().toString();
                         String newBarcode = editTextContainer.getText().toString();
                         editTextContainer.setText("");
-//                        updateView(lastBarcode);
-                        updateView(newBarcode);
                         if (getCurrentFocus() != null) {
                             InputMethodManager imm = ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE));
                             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                         }
+                        updateView(newBarcode);
                     } else {
                         editTextContainer.setText("");
                     }
@@ -982,6 +1004,7 @@ public class ContainerActivity extends AppCompatActivity {
                 case R.id.activity_container_image_button_menu:
 //                    drawer.openDrawer(0);
                     stopAutoScan();
+                    isMenuDraw = true;
                     drawer.openDrawer(Gravity.LEFT);
                     break;
                 default:
@@ -1081,10 +1104,51 @@ public class ContainerActivity extends AppCompatActivity {
     class ContainerOnCanceled implements Dialog.OnCancelListener{
         @Override
         public void onCancel(DialogInterface dialogInterface) {
-            Toast.makeText(context, "=========", Toast.LENGTH_SHORT).show();
-            if (progressZayavkaTask != null && progressZayavkaTask.getStatus() == AsyncTask.Status.RUNNING){
-                progressZayavkaTask.cancel(false);
-                //progressZayavkaTask.can
+
+            // Перед отменой загрузки информации по Заявке ТЭП переспросим на всякий случай.
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Отменить загрузку Заявки ТЭП?");
+            builder.setMessage("");
+            builder.setIcon(R.mipmap.ic_close_circle_outline_red_48dp);
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(context, "Загрузка отменена", Toast.LENGTH_SHORT).show();
+                if (progressZayavkaTask != null && progressZayavkaTask.getStatus() == AsyncTask.Status.RUNNING){
+                    progressZayavkaTask.cancel(true);
+                    //progressZayavkaTask.can
+                }
+                dialogInterface.cancel();
+                }
+            });
+
+            builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                    zayavkaProgressDialog.show();
+
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+//            Toast.makeText(context, "=========", Toast.LENGTH_SHORT).show();
+//            if (progressZayavkaTask != null && progressZayavkaTask.getStatus() == AsyncTask.Status.RUNNING){
+//                progressZayavkaTask.cancel(true);
+//                //progressZayavkaTask.can
+//            }
+        }
+    }
+
+    class ContainerOnSettingsContainerRedoListener implements OnSettingsContainerRedoListener{
+        @Override
+        public void onSettingsContainerRedo() {
+            // блок необходим для перерисовки экрана при изменении настроек
+            if (containerPropertiesAdapter != null){
+                showContainer();
             }
         }
     }

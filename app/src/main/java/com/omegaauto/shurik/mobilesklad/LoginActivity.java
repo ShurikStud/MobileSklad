@@ -16,6 +16,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -61,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    Window window;
     private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mUserName;
     private EditText mPasswordView;
@@ -106,6 +109,12 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        window = getWindow();
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.setStatusBarColor(getResources().getColor(R.color.colorBackgroundSeparatorCenter));
+        }
 
         updateView();
 

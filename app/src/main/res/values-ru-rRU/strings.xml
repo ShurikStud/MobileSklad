@@ -21,8 +21,8 @@
     <string name="title_activity_splash">OTH</string>
     <string name="scan_exit_message">Для выхода из приложения нажмите кнопку \"Назад\" еще раз.</string>
     <string name="barcode">ШК</string>
-    <string name="enable_counter">использовать счетчик при просмотре информации о контейнере</string>
-    <string name="setting_timeout">таймаут</string>
+    <string name="enable_counter">использовать счетчик при сканировании камерой</string>
+    <string name="setting_timeout">время ожидания ответа сервера (сек)</string>
     <string name="settings_reset">сбросить настройки</string>
     <string name="font">шрифт</string>
     <string-array name="font_descr">

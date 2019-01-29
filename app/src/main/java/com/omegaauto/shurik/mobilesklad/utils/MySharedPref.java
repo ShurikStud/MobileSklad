@@ -22,14 +22,13 @@ public class MySharedPref {
         SharedPreferences.Editor    shPreferencesEditor  = sharedPreferences.edit();
 
         ContainerPropertiesSettings containerPropertiesSettings = ContainerPropertiesSettings.getInstance();
+        //containerPropertiesSettings.notifyObservers();
 
         Gson gson   = new Gson();
         String json = gson.toJson(containerPropertiesSettings);
 
         shPreferencesEditor.putString(CONTAINER_PROPERTIES_SETTINGS, json);
-
         shPreferencesEditor.commit();
-
     }
 
     public static void saveBarcode(Context context, String barcode){

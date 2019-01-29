@@ -305,6 +305,10 @@ public class Container {
         setAllProperties("превышено ожидание");
     }
 
+    public void setError(String errorString){
+        setAllProperties(errorString);
+    }
+
     public Container copy(){
         Container containerCopy = new Container();
         containerCopy.setAmount_goods(this.amount_goods);

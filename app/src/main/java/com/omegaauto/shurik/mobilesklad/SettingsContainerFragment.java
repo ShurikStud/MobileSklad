@@ -42,7 +42,6 @@ public class SettingsContainerFragment extends Fragment {
         linearLayout = (LinearLayout) view.findViewById(R.id.activity_settings_layout_list_view);
         listView = (ListView) view.findViewById(R.id.activity_settings_list_view);
 
-//        settingsAdapter = new SettingsAdapter(this.getContext());
         settingsAdapter = new SettingsAdapter(this.getContext());
         settingsAdapter.notifyDataSetChanged();
 

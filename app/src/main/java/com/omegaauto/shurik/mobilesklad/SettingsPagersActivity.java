@@ -43,6 +43,7 @@ public class SettingsPagersActivity extends FragmentActivity {
         super.onPause();
         MySharedPref.saveSettings(this);
         MySharedPref.saveMobileSkladSettings(this);
+
     }
 
     class MobileSkladPagerAdapter extends FragmentPagerAdapter {

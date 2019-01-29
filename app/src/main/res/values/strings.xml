@@ -5,7 +5,7 @@
     <string name="main_radioButton_offline_online">offline + online</string>
     <string name="action_sign_in">start</string>
     <string name="action_sign_out">exit</string>
-    <string name="prompt_user_name">e-mail</string>
+    <string name="prompt_user_name">user name</string>
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">password</string>
     <string name="activity_main_switch_autologin">autologin</string>
